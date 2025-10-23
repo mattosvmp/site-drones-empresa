@@ -4,8 +4,30 @@
  */
 
 document.addEventListener("DOMContentLoaded", () => {
+  const mainHeader = document.querySelector(".main-header"); // Seleciona o header
+  const scrollThreshold = 50; // Limite de rolagem para o encolhimento (em pixels)
+
   // ----------------------------------------------------------------------
-  // 1. FUNCIONALIDADE DO MENU RESPONSIVO
+  // 1. FUNCIONALIDADE DO HEADER ENCOLHÍVEL (SHRINKING HEADER)
+  // ----------------------------------------------------------------------
+  const checkScroll = () => {
+    // Esta lógica agora se aplica a TODOS os tamanhos de tela
+    if (window.scrollY > scrollThreshold) {
+      mainHeader.classList.add("scrolled");
+    } else {
+      mainHeader.classList.remove("scrolled");
+    }
+  };
+
+  // Executa a função na rolagem
+  window.addEventListener("scroll", checkScroll);
+  // Executa uma vez ao carregar
+  checkScroll();
+  // Reavalia ao redimensionar a janela (para mobile/desktop)
+  window.addEventListener("resize", checkScroll);
+
+  // ----------------------------------------------------------------------
+  // 2. FUNCIONALIDADE DO MENU RESPONSIVO
   // ----------------------------------------------------------------------
   const menuToggle = document.querySelector(".menu-toggle");
   const mainNav = document.querySelector(".main-nav");
@@ -37,11 +59,26 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // ----------------------------------------------------------------------
-  // 2. FUNCIONALIDADE DE ANO AUTOMÁTICO NO RODAPÉ
+  // 3. FUNCIONALIDADE DE ANO AUTOMÁTICO NO RODAPÉ
   // ----------------------------------------------------------------------
   const currentYearEl = document.getElementById("current-year");
   if (currentYearEl) {
     const currentYear = new Date().getFullYear();
     currentYearEl.textContent = currentYear;
   }
+
+  // ----------------------------------------------------------------------
+  // 4. CORREÇÃO DE FOCO INICIAL DO NAVEGADOR
+  // Força o desvio do foco do navegador para resolver o problema do Contato selecionado no load
+  // ----------------------------------------------------------------------
+  const shiftInitialFocus = () => {
+    // Verifica se algum elemento está focado
+    if (document.activeElement) {
+      // Desvia o foco para que nenhum elemento seja inicialmente selecionado
+      document.activeElement.blur();
+    }
+  };
+
+  // Executa a correção logo após o DOM estar pronto
+  shiftInitialFocus();
 });

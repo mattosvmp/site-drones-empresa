@@ -7,12 +7,38 @@
   box-sizing: border-box;
 }
 
+/* Variáveis de cor e altura para fácil manutenção */
+:root {
+  --accent-color: #00bcd4; /* Azul/Ciano de destaque */
+  --dark-bg: #050505;
+  --darker-bg: #000;
+  --text-color: #fff;
+
+  /* ALTURAS DO HEADER NOS DOIS ESTADOS */
+  --header-height-large: 100px; /* Grande (Hero Section) */
+  --header-height-small: 60px; /* Minimalista (Após scroll) */
+
+  --header-height-mobile: 65px; /* Mobile (Altura única, não encolhe) */
+}
+
+/* === RESET DE FOCO UNIVERSAL (Solução Invasiva) === */
+*:focus,
+a:focus,
+button:focus,
+[role="button"]:focus,
+*:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  text-decoration: none !important;
+}
+/* ==================================================== */
+
 body {
   font-family: "Montserrat", sans-serif;
   line-height: 1.6;
-  color: #fff;
-  background-color: #000;
-  /* Garante um comportamento de scroll suave (opcional, mas agradável) */
+  color: var(--text-color);
+  background-color: var(--darker-bg);
   scroll-behavior: smooth;
 }
 
@@ -49,34 +75,52 @@ h2 {
   margin-bottom: 60px;
 }
 
-/* Cor de destaque principal */
-:root {
-  --accent-color: #00bcd4;
-  --dark-bg: #050505;
-  --darker-bg: #000;
-  --text-color: #fff;
-}
-
 /*
- * 2. Cabeçalho Principal (Header) - SEM GRANDES MUDANÇAS
+ * 2. Cabeçalho Principal (Header) - SHINKING HEADER (GRANDE POR PADRÃO)
  */
 .main-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 40px;
+  padding: 0 40px;
+  height: var(--header-height-large); /* ESTADO GRANDE */
   position: fixed;
   width: 100%;
+
+  /* CORREÇÃO: FORÇA PARA O TOPO ABSOLUTO */
+  top: 0;
+  left: 0;
+
   z-index: 1000;
-  background-color: rgba(0, 0, 0, 0.9);
+
+  /* AGORA É TRANSPARENTE NO TOPO */
+  background-color: transparent;
+
+  transition: all 0.4s ease; /* Transição suave entre os estados */
 }
 
-.logo a {
-  font-size: 1.8rem;
-  font-weight: 800;
-  letter-spacing: 2px;
+/* LOGO AMPLIADA: 75px de altura no estado GRANDE */
+.header-logo {
+  height: 75px;
+  width: auto;
+  display: block;
+  transition: all 0.4s ease; /* Transição suave da logo */
 }
 
+/* *** NOVO ESTADO: O HEADER ENCOLHIDO (CLASSE ADICIONADA PELO JS) *** */
+.main-header.scrolled {
+  height: var(--header-height-small); /* Reduz para 60px */
+
+  /* O fundo sólido é aplicado APENAS quando a classe .scrolled está ativa */
+  background-color: var(--darker-bg);
+}
+
+/* LOGO NO ESTADO ENCOLHIDO */
+.main-header.scrolled .header-logo {
+  height: 40px; /* Reduz o logo para 40px */
+}
+
+/* Restante dos estilos do Header */
 .main-nav ul {
   display: flex;
 }
@@ -95,6 +139,7 @@ h2 {
   color: var(--accent-color);
 }
 
+/* Estilo do Botão Contato (apenas a classe de estilo, o foco é removido globalmente) */
 .btn-contato {
   border: 2px solid var(--text-color);
   padding: 8px 15px;
@@ -118,34 +163,41 @@ h2 {
 }
 
 /*
- * 3. Seção de Destaque (Hero Section)
- * *** IMPLEMENTAÇÃO DO PARALLAX ***
+ * 3. Seção de Destaque (Hero Section) - Agora com Vídeo
  */
 .hero-section {
   height: 100vh;
+  /* Usa a altura GRANDE para a margem superior */
+  margin-top: var(--header-height-large);
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-  position: relative;
-  overflow: hidden; /* Garante que o fundo fixo não cause barra de rolagem */
-
-  /* Configuração do fundo para Parallax:
-       Usamos uma cor sólida já que não há imagem por enquanto.
-       Se for adicionar uma imagem, a propriedade 'background-attachment: fixed'
-       é a chave para o efeito parallax.
-    */
-  background-color: var(--darker-bg);
-
-  /* Se for usar uma imagem depois, use:
-       background-image: url('sua-imagem.jpg');
-       background-size: cover;
-       background-position: center;
-       background-attachment: fixed; 
-    */
+  position: relative; /* Essencial para o posicionamento do vídeo */
+  overflow: hidden;
+  background-color: var(
+    --darker-bg
+  ); /* Cor de fallback caso o vídeo não carregue */
 }
 
-/* Camada escura/fundo para o Parallax */
+/* ESTILO DO VÍDEO ADICIONADO */
+.hero-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  /* Centraliza o vídeo */
+  transform: translate(-50%, -50%);
+
+  /* Garante que o vídeo cubra a tela */
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+
+  /* Coloca o vídeo NO FUNDO */
+  z-index: 1;
+}
+
 .hero-section::before {
   content: "";
   position: absolute;
@@ -153,12 +205,13 @@ h2 {
   left: 0;
   right: 0;
   bottom: 0;
-  /* Fundo escuro sutil para garantir legibilidade */
   background-color: rgba(0, 0, 0, 0.7);
+  /* Coloca o overlay escuro SOBRE O VÍDEO (z-index 1) */
   z-index: 5;
 }
 
 .hero-content {
+  /* Coloca o texto SOBRE O OVERLAY (z-index 5) */
   z-index: 10;
   max-width: 800px;
   padding: 20px;
@@ -192,7 +245,7 @@ h2 {
 }
 
 /*
- * 4. Seção de Soluções/Serviços - SEM GRANDES MUDANÇAS
+ * 4. Seção de Soluções/Serviços
  */
 .solucoes-section {
   background-color: var(--dark-bg);
@@ -206,11 +259,14 @@ h2 {
 }
 
 .solucao-item {
-  padding: 30px;
+  /* Padding removido daqui para a imagem encostar na borda */
+  padding: 0;
   border: 1px solid #333;
   background-color: #111;
   border-radius: 8px;
   transition: transform 0.3s, background-color 0.3s;
+  /* Adicionado overflow hidden para conter a borda da imagem */
+  overflow: hidden;
 }
 
 .solucao-item:hover {
@@ -219,13 +275,27 @@ h2 {
   border-color: var(--accent-color);
 }
 
-/* Garante que o placeholder SVG seja visível com a cor de destaque */
-.solucao-icon {
-  width: 60px;
-  height: 60px;
-  margin-bottom: 15px;
-  filter: invert(1) brightness(1.5) sepia(1) hue-rotate(140deg) saturate(5);
+/* Classe .solucao-icon removida/ignorada pois não é mais usada */
+
+/* ============================================= */
+/* NOVA CLASSE PARA AS IMAGENS DOS SERVIÇOS    */
+/* ============================================= */
+.solucao-imagem {
+  width: 100%;
+  height: 200px; /* Altura fixa para as imagens */
+  object-fit: cover; /* Garante que a imagem cubra sem distorcer */
+  display: block;
 }
+/* ============================================= */
+
+/* ============================================= */
+/* NOVA CLASSE PARA O TEXTO DENTRO DO CARD     */
+/* ============================================= */
+.solucao-texto {
+  /* Padding original do .solucao-item movido para cá */
+  padding: 30px;
+}
+/* ============================================= */
 
 .solucao-item h3 {
   font-size: 1.5rem;
@@ -238,12 +308,13 @@ h2 {
 }
 
 /*
- * 5. Seção de Portfólio - SEM GRANDES MUDANÇAS
+ * 5. Seção de Portfólio
  */
 .portifolio-section {
   background-color: var(--darker-bg);
 }
 
+/* Estilos antigos do grid de imagens (mantidos para não quebrar nada se forem reutilizados) */
 .portifolio-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -294,8 +365,16 @@ h2 {
   color: var(--accent-color);
 }
 
+/* NOVO ESTILO ADICIONADO PARA OS BOTÕES DO PORTFÓLIO */
+.portifolio-cta-grid {
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* Espaço entre os botões */
+  flex-wrap: wrap; /* Permite que os botões quebrem a linha em telas pequenas */
+}
+
 /*
- * 6. Seção Sobre Nós - SEM GRANDES MUDANÇAS
+ * 6. Seção Sobre Nós
  */
 .sobre-section {
   background-color: var(--darker-bg);
@@ -333,7 +412,63 @@ h2 {
 }
 
 /*
- * 7. Seção de Contato - SEM GRANDES MUDANÇAS
+ * 7. Seção de Valores (Mantida)
+ */
+.valores-section {
+  background-color: var(--dark-bg);
+  padding: 80px 0;
+}
+
+.valores-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  text-align: center;
+}
+
+.valor-item {
+  padding: 30px;
+  border: 1px solid #333;
+  border-radius: 8px;
+  background-color: #111;
+  transition: border-color 0.3s;
+}
+
+.valor-item:hover {
+  border-color: var(--accent-color);
+}
+
+.valor-item h3 {
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+  color: var(--accent-color);
+}
+
+.valor-item p {
+  color: #ccc;
+}
+
+/*
+ * 8. Seção de Missão (Mantida)
+ */
+.missao-section {
+  background-color: var(--darker-bg);
+  padding: 80px 0;
+}
+
+.missao-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.missao-content p {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: #ddd;
+}
+
+/*
+ * 9. Seção de Contato (Mantida comentada)
  */
 .contato-section {
   background-color: var(--dark-bg);
@@ -345,12 +480,6 @@ h2 {
   gap: 50px;
   text-align: left;
   margin-top: 30px;
-}
-
-.contato-form {
-  flex: 2;
-  display: flex;
-  flex-direction: column;
 }
 
 .contato-form input,
@@ -409,7 +538,7 @@ h2 {
 }
 
 /*
- * 8. Rodapé (Footer) - SEM GRANDES MUDANÇAS
+ * 10. Rodapé (Footer)
  */
 .main-footer {
   background-color: var(--dark-bg);
@@ -426,10 +555,23 @@ h2 {
 }
 
 .footer-logo {
+  /* Estilos de texto removidos (ou ignorados), pois agora é um container de imagem */
   font-size: 1.5rem;
   font-weight: 800;
   letter-spacing: 1px;
   color: var(--text-color);
+}
+
+/* NOVO ESTILO PARA A IMAGEM DO LOGO NO RODAPÉ */
+.footer-logo-img {
+  height: 200px; /* Altura da logo no rodapé */
+  width: auto;
+  opacity: 0.8; /* Levemente esmaecida */
+  transition: opacity 0.3s ease;
+}
+
+.footer-logo-img:hover {
+  opacity: 1; /* Opacidade total ao passar o mouse */
 }
 
 .footer-links h4 {
@@ -464,9 +606,14 @@ h2 {
 }
 
 /*
- * 9. Responsividade Final (Media Queries) - SEM ALTERAÇÕES
+ * 11. Responsividade Final (Media Queries)
  */
 @media (max-width: 900px) {
+  /* Logo em telas médias */
+  .header-logo {
+    height: 45px;
+  }
+
   .sobre-content {
     flex-direction: column;
     gap: 30px;
@@ -492,17 +639,44 @@ h2 {
 }
 
 @media (max-width: 768px) {
+  /* AJUSTES PARA MOBILE */
+
+  /* O header e o logo são constantes no mobile, não encolhem */
   .main-header {
-    padding: 15px 20px;
+    padding: 0 20px;
+    height: var(--header-height-mobile); /* Usa 65px de altura */
+    /* AGORA COMEÇA TRANSPARENTE NO MOBILE TAMBÉM */
+    background-color: transparent;
+  }
+
+  /* O JS vai adicionar "scrolled" ao rolar no mobile */
+  .main-header.scrolled {
+    /* E SÓ ENTÃO o fundo preto aparece */
+    background-color: var(--darker-bg);
+  }
+
+  .hero-section {
+    margin-top: var(--header-height-mobile); /* Compensa a altura do header */
+  }
+
+  .header-logo,
+  .main-header.scrolled .header-logo {
+    height: 40px; /* Logo no mobile */
   }
 
   .main-nav {
     display: none;
     flex-direction: column;
-    position: absolute;
-    top: 65px;
+
+    /* CORREÇÃO DO MENU HAMBURGUER */
+    position: fixed;
+    top: var(--header-height-mobile);
     left: 0;
     width: 100%;
+    height: calc(100vh - var(--header-height-mobile));
+    overflow-y: auto;
+    z-index: 999;
+
     background-color: #111;
     text-align: center;
     padding: 20px 0;
@@ -553,4 +727,54 @@ h2 {
     grid-template-columns: 1fr;
     text-align: center;
   }
+}
+
+/*
+ * 12. Botão Flutuante (WhatsApp)
+ */
+
+.whatsapp-float {
+  /* 1. Posicionamento Fixo */
+  position: fixed;
+  bottom: 30px; /* Distância da parte inferior */
+  right: 30px; /* Distância da parte direita */
+
+  /* * 2. Z-index:
+   * O seu header tem z-index: 1000.
+   * Precisamos de um valor maior (ex: 1001) para que o botão
+   * flutue ACIMA do header, caso o usuário role até o topo.
+   */
+  z-index: 1001;
+
+  /* 3. Aparência */
+  width: 60px;
+  height: 60px;
+  background-color: #25d366; /* Cor oficial do WhatsApp */
+  color: #ffffff; /* Cor do ícone SVG (branco) */
+  border-radius: 50%; /* Deixa o botão redondo */
+
+  /* 4. Sombra para dar profundidade */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+
+  /* 5. Centralização do ícone SVG */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* 6. Transição suave para o efeito hover */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* 7. Tamanho do ícone SVG dentro do botão */
+.whatsapp-float svg {
+  width: 32px;
+  height: 32px;
+}
+
+/* 8. Efeito Hover (passar o mouse) */
+.whatsapp-float:hover {
+  /* Levemente para cima e maior */
+  transform: translateY(-5px) scale(1.05);
+  /* Sombra mais pronunciada */
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
 }
