@@ -1,0 +1,45 @@
+/* css/components.css */
+
+/*
+ * 12. Botão Flutuante (WhatsApp)
+ */
+
+.whatsapp-float {
+  /* 1. Posicionamento Fixo */
+  position: fixed;
+  bottom: 30px; /* Distância da parte inferior */
+  right: 30px; /* Distância da parte direita */
+  z-index: 1001;
+
+  /* 3. Aparência */
+  width: 60px;
+  height: 60px;
+  background-color: #25d366; /* Cor oficial do WhatsApp */
+  color: #ffffff; /* Cor do ícone SVG (branco) */
+  border-radius: 50%; /* Deixa o botão redondo */
+
+  /* 4. Sombra para dar profundidade */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+
+  /* 5. Centralização do ícone SVG */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* 6. Transição suave para o efeito hover */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* 7. Tamanho do ícone SVG dentro do botão */
+.whatsapp-float svg {
+  width: 32px;
+  height: 32px;
+}
+
+/* 8. Efeito Hover (passar o mouse) */
+.whatsapp-float:hover {
+  /* Levemente para cima e maior */
+  transform: translateY(-5px) scale(1.05);
+  /* Sombra mais pronunciada */
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}

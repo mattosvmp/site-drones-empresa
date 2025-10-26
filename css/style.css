@@ -1,0 +1,9 @@
+/* Arquivo Principal - Importa todos os módulos */
+
+@import url("base.css");
+@import url("header.css");
+@import url("hero.css");
+@import url("sections.css");
+@import url("footer.css");
+@import url("components.css");
+@import url("responsive.css");

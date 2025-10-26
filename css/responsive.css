@@ -1,0 +1,138 @@
+/* css/responsive.css */
+
+/*
+ * 11. Responsividade Final (Media Queries)
+ */
+@media (max-width: 900px) {
+  /* Ajustes no header para telas médias */
+  .main-header {
+    padding: 0 30px; /* Menos padding lateral */
+  }
+  .main-nav li {
+    margin: 0 10px; /* Menos espaço entre links */
+  }
+  .language-selector {
+    margin-right: 15px;
+  }
+  .btn-contato-header {
+    padding: 6px 10px; /* Botão ligeiramente menor */
+    font-size: 0.9rem;
+  }
+
+  /* Ajustes gerais */
+  .sobre-content {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .sobre-image {
+    order: -1;
+  }
+
+  .contato-content {
+    flex-direction: column;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    text-align: center;
+  }
+
+  .footer-logo {
+    grid-column: 1 / -1;
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  /* AJUSTES PARA MOBILE */
+
+  /* O header e o logo são constantes no mobile, não encolhem */
+  .main-header {
+    padding: 0 20px;
+    height: var(--header-height-mobile); /* Usa 65px de altura */
+    background-color: transparent;
+  }
+
+  .main-header.scrolled {
+    background-color: var(--darker-bg);
+  }
+
+  .hero-section {
+    margin-top: var(--header-height-mobile); /* Compensa a altura do header */
+  }
+
+  /* Esconde a nav principal e os controles da direita */
+  .main-nav,
+  .header-right-controls {
+    display: none;
+  }
+
+  .logo-text a,
+  .main-header.scrolled .logo-text a {
+    font-size: 1.3rem; /* Tamanho fixo da logo no mobile */
+  }
+
+  /* Define o menu hamburguer */
+  .main-nav {
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    top: var(--header-height-mobile);
+    left: 0;
+    width: 100%;
+    height: calc(100vh - var(--header-height-mobile));
+    overflow-y: auto;
+    z-index: 999;
+    background-color: #111;
+    text-align: center;
+    padding: 20px 0;
+  }
+
+  .main-nav.open {
+    display: flex; /* Mostra o menu quando aberto */
+  }
+
+  .main-nav ul {
+    flex-direction: column; /* Links em coluna */
+  }
+
+  .main-nav li {
+    margin: 15px 0; /* Espaçamento vertical */
+  }
+
+  .menu-toggle {
+    display: block; /* Mostra o botão hamburguer */
+  }
+
+  /* Restante do mobile */
+  .hero-content h1 {
+    font-size: 2.5rem;
+  }
+
+  .hero-content p {
+    font-size: 1rem;
+  }
+
+  .btn-principal {
+    padding: 12px 25px;
+  }
+
+  .solucoes-grid,
+  .portifolio-grid {
+    grid-template-columns: 1fr;
+  }
+
+  section {
+    padding: 60px 0;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+}

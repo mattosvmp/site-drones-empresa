@@ -1,0 +1,135 @@
+/* css/header.css */
+
+/*
+ * 2. Cabeçalho Principal (Header) - ATUALIZADO
+ */
+.main-header {
+  display: flex;
+  justify-content: space-between; /* Logo (esq), Nav (centro), Controles (dir) */
+  align-items: center; /* ESTA LINHA ALINHA VERTICALMENTE AO CENTRO */
+  padding: 0 40px;
+  height: var(--header-height-large); /* ESTADO GRANDE */
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background-color: transparent;
+  transition: all 0.4s ease; /* Transição suave entre os estados */
+}
+
+/* LOGO COMO TEXTO */
+.logo-text {
+  flex: 1 0 auto;
+  min-width: 150px;
+}
+
+.logo-text a {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--text-color);
+  letter-spacing: 1px;
+  transition: all 0.4s ease;
+}
+
+/* NAVEGAÇÃO CENTRALIZADA */
+.main-nav {
+  flex: 1 1 0;
+  display: flex;
+  justify-content: center; /* Centraliza a <ul> */
+}
+
+.main-nav ul {
+  display: flex;
+  align-items: center; /* Alinha verticalmente os itens da lista */
+}
+
+.main-nav li {
+  margin: 0 15px; /* Espaço entre os links */
+}
+
+.main-nav a {
+  font-weight: 600;
+  padding: 5px 0;
+  transition: color 0.3s;
+}
+
+.main-nav a:hover {
+  color: var(--accent-color);
+}
+
+/* BOTÃO LUMASKY (DENTRO DA NAV) - ESTILO SIMPLIFICADO */
+.btn-lumasky {
+  transition: color 0.3s;
+}
+
+.btn-lumasky:hover {
+  color: var(--accent-color);
+}
+
+/* CONTROLES DA DIREITA */
+.header-right-controls {
+  flex: 1 0 auto;
+  display: flex;
+  justify-content: flex-end; /* Alinha à direita */
+  align-items: center; /* Alinha verticalmente os controles */
+  min-width: 150px;
+}
+
+/* SELETOR DE IDIOMAS */
+.language-selector {
+  margin-right: 20px;
+}
+
+.language-selector a {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #aaa; /* Cor suave para inativos */
+  padding: 0 5px;
+  transition: color 0.3s;
+}
+
+.language-selector a:hover {
+  color: var(--text-color);
+}
+
+.language-selector a.lang-active {
+  color: var(--text-color);
+}
+
+/* BOTÃO DE CONTATO NO HEADER */
+.btn-contato-header {
+  border: 2px solid var(--text-color);
+  padding: 8px 15px;
+  border-radius: 5px;
+  font-weight: 600;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.btn-contato-header:hover {
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
+  color: var(--darker-bg);
+}
+
+/* *** ESTADO ENCOLHIDO (SCROLLED) *** */
+.main-header.scrolled {
+  height: var(--header-height-small); /* Reduz para 60px */
+  background-color: var(--darker-bg);
+}
+
+/* LOGO NO ESTADO ENCOLHIDO */
+.main-header.scrolled .logo-text a {
+  font-size: 1.5rem; /* Fonte menor ao rolar */
+}
+
+/* Botão de menu mobile (sempre escondido no desktop) */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text-color);
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 1001;
+}

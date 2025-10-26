@@ -1,0 +1,94 @@
+/* css/base.css */
+
+/*
+ * 1. Reset Básico & Estilos Globais
+ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Variáveis de cor e altura para fácil manutenção */
+:root {
+  --accent-color: #00bcd4; /* Azul/Ciano de destaque */
+  --dark-bg: #050505;
+  --darker-bg: #000;
+  --text-color: #fff;
+
+  /* ALTURAS DO HEADER NOS DOIS ESTADOS */
+  --header-height-large: 100px; /* Grande (Hero Section) */
+  --header-height-small: 60px; /* Minimalista (Após scroll) */
+
+  --header-height-mobile: 65px; /* Mobile (Altura única, não encolhe) */
+}
+
+/* === RESET DE FOCO UNIVERSAL (Solução Invasiva) === */
+*:focus,
+a:focus,
+button:focus,
+[role="button"]:focus,
+*:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  text-decoration: none !important;
+}
+/* ==================================================== */
+
+body {
+  font-family: "Montserrat", sans-serif;
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: var(--darker-bg);
+  scroll-behavior: smooth;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+section {
+  padding: 80px 0;
+  text-align: center;
+}
+
+h2 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: #ccc;
+  margin-bottom: 60px;
+}
+
+/* Botão principal genérico */
+.btn-principal {
+  display: inline-block;
+  padding: 15px 30px;
+  background-color: var(--accent-color);
+  color: var(--darker-bg);
+  font-weight: 600;
+  border-radius: 5px;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.btn-principal:hover {
+  background-color: #00a4b7;
+  transform: translateY(-3px);
+}
