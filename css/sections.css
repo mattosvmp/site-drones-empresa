@@ -1,8 +1,5 @@
 /* css/sections.css */
 
-/*
- * 4. Seção de Soluções/Serviços
- */
 .solucoes-section {
   background-color: var(--dark-bg);
 }
@@ -15,14 +12,13 @@
 }
 
 .solucao-item {
-  /* Padding removido daqui para a imagem encostar na borda */
   padding: 0;
   border: 1px solid #333;
   background-color: #111;
   border-radius: 8px;
-  transition: transform 0.3s, background-color 0.3s;
-  /* Adicionado overflow hidden para conter a borda da imagem */
+  transition: transform 0.3s, background-color 0.3s, border-color 0.3s;
   overflow: hidden;
+  position: relative;
 }
 
 .solucao-item:hover {
@@ -31,17 +27,14 @@
   border-color: var(--accent-color);
 }
 
-/* NOVA CLASSE PARA AS IMAGENS DOS SERVIÇOS */
 .solucao-imagem {
   width: 100%;
-  height: 200px; /* Altura fixa para as imagens */
-  object-fit: cover; /* Garante que a imagem cubra sem distorcer */
+  height: 200px;
+  object-fit: cover;
   display: block;
 }
 
-/* NOVA CLASSE PARA O TEXTO DENTRO DO CARD */
 .solucao-texto {
-  /* Padding original do .solucao-item movido para cá */
   padding: 30px;
 }
 
@@ -53,16 +46,28 @@
 
 .solucao-item p {
   color: #ccc;
+  margin-bottom: 15px;
 }
 
-/*
- * 5. Seção de Portfólio
- */
+.card-link-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  text-decoration: none;
+  color: inherit;
+}
+
+.link-lumasky-card {
+  display: none;
+}
+
 .portifolio-section {
   background-color: var(--darker-bg);
 }
 
-/* Estilos antigos do grid de imagens (mantidos para não quebrar nada se forem reutilizados) */
 .portifolio-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -113,20 +118,31 @@
   color: var(--accent-color);
 }
 
-/* NOVO ESTILO ADICIONADO PARA OS BOTÕES DO PORTFÓLIO */
 .portifolio-cta-grid {
   display: flex;
   justify-content: center;
-  gap: 20px; /* Espaço entre os botões */
-  flex-wrap: wrap; /* Permite que os botões quebrem a linha em telas pequenas */
+  gap: 20px;
+  flex-wrap: wrap;
 }
 
-/*
- * 6. Seção Sobre Nós
- */
 .sobre-section {
   background-color: var(--darker-bg);
-  text-align: left;
+}
+
+.sobre-section .subtitle {
+  margin-bottom: 20px;
+}
+
+.sobre-intro {
+  text-align: center;
+  margin-bottom: 40px;
+  color: #ddd;
+  font-size: 1.1rem;
+  font-style: italic;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0;
 }
 
 .sobre-content {
@@ -159,9 +175,6 @@
   display: block;
 }
 
-/*
- * 7. Seção de Valores (Mantida)
- */
 .valores-section {
   background-color: var(--dark-bg);
   padding: 80px 0;
@@ -196,9 +209,6 @@
   color: #ccc;
 }
 
-/*
- * 8. Seção de Missão (Mantida)
- */
 .missao-section {
   background-color: var(--darker-bg);
   padding: 80px 0;
@@ -215,25 +225,31 @@
   color: #ddd;
 }
 
-/*
- * 9. Seção de Contato (Mantida comentada)
- */
 .contato-section {
   background-color: var(--dark-bg);
 }
 
-.contato-content {
-  display: flex;
-  justify-content: space-between;
-  gap: 50px;
+.contato-form {
+  max-width: 600px;
+  margin: 0 auto 40px auto;
   text-align: left;
-  margin-top: 30px;
 }
 
-.contato-form input,
-.contato-form textarea {
-  padding: 15px;
+.form-group {
   margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #ccc;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 15px;
   border: 1px solid #333;
   border-radius: 5px;
   background-color: #111;
@@ -241,46 +257,49 @@
   font-family: "Montserrat", sans-serif;
   font-size: 1rem;
   resize: vertical;
+  transition: border-color 0.3s ease;
 }
 
-.contato-form input:focus,
-.contato-form textarea:focus {
+.form-group input:focus,
+.form-group textarea:focus {
   outline: none;
   border-color: var(--accent-color);
 }
 
-.contato-info {
-  flex: 1;
-  padding: 20px;
-  background-color: #111;
-  border-radius: 8px;
+.btn-submit {
+  display: block;
+  width: 100%;
+  padding: 15px 30px;
+  background-color: var(--accent-color);
+  color: var(--darker-bg);
+  font-weight: 600;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
 }
 
-.contato-info h3 {
-  font-size: 1.5rem;
-  margin-bottom: 20px;
-  color: var(--accent-color);
+.btn-submit:hover {
+  background-color: #00a4b7;
+  transform: translateY(-3px);
 }
 
-.contato-info p {
-  margin-bottom: 10px;
+.contato-info-alternativa {
+  margin-top: 40px;
+  text-align: center;
   color: #ccc;
 }
 
-.social-links {
-  margin-top: 20px;
+.contato-info-alternativa p {
+  margin-bottom: 10px;
 }
 
-.social-links a {
-  margin-right: 15px;
-  display: inline-block;
-  transition: transform 0.3s;
+.contato-info-alternativa a {
+  color: var(--accent-color);
+  text-decoration: none;
+  transition: color 0.3s;
 }
 
-.social-links a:hover {
-  transform: scale(1.1);
-}
-
-.social-links img {
-  filter: invert(1) brightness(1.5) sepia(1) hue-rotate(140deg) saturate(5);
+.contato-info-alternativa a:hover {
+  color: #fff;
 }

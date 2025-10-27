@@ -1,8 +1,5 @@
 /* css/footer.css */
 
-/*
- * 10. Rodapé (Footer)
- */
 .main-footer {
   background-color: var(--dark-bg);
   padding: 40px 0 20px;
@@ -11,29 +8,23 @@
 
 .footer-grid {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-columns: 1fr auto auto auto;
   gap: 40px;
   padding-bottom: 30px;
   text-align: left;
+  align-items: center;
 }
 
-.footer-logo {
-  font-size: 1.5rem;
-  font-weight: 800;
-  letter-spacing: 1px;
-  color: var(--text-color);
-}
-
-/* NOVO ESTILO PARA A IMAGEM DO LOGO NO RODAPÉ */
 .footer-logo-img {
-  height: 200px; /* Altura da logo no rodapé */
+  height: 200px;
   width: auto;
-  opacity: 0.8; /* Levemente esmaecida */
+  opacity: 0.8;
   transition: opacity 0.3s ease;
+  display: block;
 }
 
 .footer-logo-img:hover {
-  opacity: 1; /* Opacidade total ao passar o mouse */
+  opacity: 1;
 }
 
 .footer-links h4 {
@@ -53,6 +44,18 @@
 
 .footer-links a:hover {
   color: var(--text-color);
+}
+
+.footer-contact-cta {
+  margin: 0;
+  padding: 0;
+  text-align: right;
+}
+
+.btn-contato-footer {
+  padding: 12px 25px;
+  font-size: 1rem;
+  white-space: nowrap;
 }
 
 .footer-bottom {
