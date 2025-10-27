@@ -1,7 +1,7 @@
 /**
  * script.js
  * Funcionalidades: Header Encolhível, Menu Responsivo, Ano Automático,
- * Foco Inicial, e Tradução via JSON.
+ * Foco Inicial, Tradução via JSON, Botão Voltar ao Topo.
  */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -71,45 +71,49 @@ document.addEventListener("DOMContentLoaded", () => {
   // ----------------------------------------------------------------------
   // 5. LÓGICA DE TRADUÇÃO (CARREGANDO JSON)
   // ----------------------------------------------------------------------
-
   const languageLinks = document.querySelectorAll(".lang-link");
   const translatableElements = document.querySelectorAll(
     "[data-translate-key]"
   );
-  let currentTranslations = {}; // Guarda as traduções carregadas
+  let currentTranslations = {};
 
-  // Função assíncrona para buscar o arquivo JSON de tradução
   async function fetchTranslations(lang) {
-    // Verifica se já temos as traduções em memória
     if (currentTranslations[lang]) {
       return currentTranslations[lang];
     }
-
-    const response = await fetch(`locales/${lang}.json`);
-    if (!response.ok) {
-      console.error(`Could not load translation file for language: ${lang}`);
-      return null; // Retorna null em caso de erro
+    try {
+      const response = await fetch(`locales/${lang}.json`);
+      if (!response.ok) {
+        console.error(
+          `Could not load translation file for language: ${lang}. Status: ${response.status}`
+        );
+        return null;
+      }
+      const translations = await response.json();
+      currentTranslations[lang] = translations;
+      return translations;
+    } catch (error) {
+      console.error(
+        `Error fetching or parsing translation file for ${lang}:`,
+        error
+      );
+      return null;
     }
-    const translations = await response.json();
-    currentTranslations[lang] = translations; // Armazena em memória
-    return translations;
   }
 
-  // Função para aplicar as traduções (agora assíncrona)
   async function setLanguage(lang) {
     const translations = await fetchTranslations(lang);
 
-    // Se não conseguiu carregar as traduções, não faz nada
     if (!translations) {
-      // Tenta carregar o idioma padrão (pt-br) como fallback
       if (lang !== "pt-br") {
-        console.warn(`Fallback to pt-br because ${lang}.json was not found.`);
-        await setLanguage("pt-br"); // Chama recursivamente com pt-br
+        console.warn(
+          `Fallback to pt-br because ${lang}.json was not found or invalid.`
+        );
+        await setLanguage("pt-br");
       }
       return;
     }
 
-    // Define o atributo lang na tag <html>
     document.documentElement.lang = lang.replace("_", "-");
 
     translatableElements.forEach((el) => {
@@ -120,7 +124,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (key === "heroTitle") {
           el.innerHTML = translation;
         } else if (el.tagName === "META") {
-          // Atualiza atributos 'content' das meta tags
           if (
             el.getAttribute("name") === "description" ||
             el.getAttribute("name") === "keywords"
@@ -130,29 +133,23 @@ document.addEventListener("DOMContentLoaded", () => {
             el.getAttribute("property") &&
             el.getAttribute("property").startsWith("og:")
           ) {
-            // Trata meta tags Open Graph (og:title, og:description, etc.)
             el.setAttribute("content", translation);
           }
         } else if (el.tagName === "TITLE") {
-          document.title = translation; // Atualiza o título da página
+          document.title = translation;
         } else {
           el.textContent = translation;
         }
-      } else {
-        // console.warn(`Missing translation for key "${key}" in language "${lang}"`);
       }
     });
 
-    // Atualiza a classe ativa nos links de idioma
     languageLinks.forEach((link) => {
       link.classList.toggle("lang-active", link.dataset.lang === lang);
     });
 
-    // Opcional: Salvar no localStorage
     // localStorage.setItem('preferredLanguage', lang);
   }
 
-  // Adiciona evento de clique aos links de idioma
   languageLinks.forEach((link) => {
     link.addEventListener("click", (event) => {
       event.preventDefault();
@@ -161,11 +158,37 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Carrega o idioma inicial (padrão PT-BR ou do localStorage)
   // const preferredLanguage = localStorage.getItem('preferredLanguage');
   // if (preferredLanguage && ['pt-br', 'en', 'es'].includes(preferredLanguage)) {
   //   setLanguage(preferredLanguage);
   // } else {
   setLanguage("pt-br");
   // }
+
+  // ----------------------------------------------------------------------
+  // 6. BOTÃO VOLTAR AO TOPO
+  // ----------------------------------------------------------------------
+  const backToTopButton = document.querySelector(".back-to-top-btn");
+  const showButtonThreshold = 300; // Pixels de rolagem para mostrar o botão
+
+  if (backToTopButton) {
+    const checkScrollForTopButton = () => {
+      if (window.scrollY > showButtonThreshold) {
+        backToTopButton.classList.add("visible");
+      } else {
+        backToTopButton.classList.remove("visible");
+      }
+    };
+
+    window.addEventListener("scroll", checkScrollForTopButton);
+    checkScrollForTopButton();
+
+    backToTopButton.addEventListener("click", (event) => {
+      event.preventDefault();
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    });
+  }
 }); // Fim do DOMContentLoaded
