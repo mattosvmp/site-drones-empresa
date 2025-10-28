@@ -1,11 +1,10 @@
 /* css/header.css */
 
 .main-header {
-  /* display: flex; */ /* Trocado por Grid */
-  display: grid; /* Usa Grid para layout de 3 colunas */
-  grid-template-columns: auto 1fr auto; /* Logo | Nav (flexível) | Controles */
+  display: flex; /* Mantém Flexbox */
+  /* justify-content: space-between; */ /* Removido, o container cuida disso */
   align-items: center;
-  padding: 0 40px;
+  /* padding: 0 40px; */ /* Removido, o container cuida disso */
   height: var(--header-height-large);
   position: fixed;
   width: 100%;
@@ -16,6 +15,24 @@
   transition: all 0.4s ease;
 }
 
+/* ============================================= */
+/* NOVO CONTAINER INTERNO PARA CENTRALIZAÇÃO     */
+/* ============================================= */
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%; /* Ocupa a largura do container pai (.container) */
+  /* Herda max-width e padding/margin auto do .container em base.css */
+}
+/* ============================================= */
+
+/* LOGO COMO TEXTO */
+.logo-text {
+  flex-shrink: 0;
+  flex: 0 1 auto;
+}
+
 .logo-text a {
   font-size: 1.8rem;
   font-weight: 800;
@@ -24,11 +41,12 @@
   transition: all 0.4s ease;
 }
 
-/* NAVEGAÇÃO CENTRALIZADA (Coluna 2 do Grid) */
+/* NAVEGAÇÃO CENTRALIZADA */
 .main-nav {
-  /* Não precisa mais de flex properties */
-  display: flex; /* Mantém flex para centralizar a ul interna */
+  flex: 1 1 auto;
+  display: flex;
   justify-content: center;
+  min-width: 0;
 }
 
 .main-nav ul {
@@ -40,8 +58,8 @@
   margin: 0 15px;
 }
 
-/* Estilo para esconder o <li> do botão de contato no desktop */
-.main-nav li.nav-contact-button-li {
+/* ESCONDE OS ITENS MOBILE DENTRO DA NAV NO DESKTOP */
+.main-nav li.mobile-only {
   display: none;
 }
 
@@ -49,13 +67,14 @@
   font-weight: 600;
   padding: 5px 0;
   transition: color 0.3s;
+  white-space: nowrap;
 }
 
 .main-nav a:hover {
   color: var(--accent-color);
 }
 
-/* BOTÃO LUMASKY (DENTRO DA NAV) */
+/* BOTÃO LUMASKY */
 .btn-lumasky {
   transition: color 0.3s;
 }
@@ -64,20 +83,20 @@
   color: var(--accent-color);
 }
 
-/* CONTROLES DA DIREITA (Coluna 3 do Grid) */
-.header-right-controls {
-  /* Não precisa mais de flex properties */
-  display: flex; /* Mantém flex para alinhar itens internos */
-  justify-content: flex-end;
+/* CONTROLES DA DIREITA (PARA DESKTOP) */
+.header-right-controls.desktop-only {
+  display: flex;
   align-items: center;
+  flex-shrink: 0;
 }
 
 /* SELETOR DE IDIOMAS */
-.language-selector {
+.header-right-controls.desktop-only .language-selector {
   margin-right: 20px;
+  white-space: nowrap;
 }
 
-.language-selector a {
+.header-right-controls.desktop-only .language-selector a {
   font-size: 0.9rem;
   font-weight: 600;
   color: #aaa;
@@ -85,24 +104,26 @@
   transition: color 0.3s;
 }
 
-.language-selector a:hover {
+.header-right-controls.desktop-only .language-selector a:hover {
   color: var(--text-color);
 }
 
-.language-selector a.lang-active {
+.header-right-controls.desktop-only .language-selector a.lang-active {
   color: var(--text-color);
 }
 
-/* BOTÃO DE CONTATO NO HEADER (Visível apenas aqui no desktop) */
-.btn-contato-header {
+/* BOTÃO DE CONTATO NO HEADER */
+.header-right-controls.desktop-only .btn-contato-header {
   border: 2px solid var(--text-color);
   padding: 8px 15px;
   border-radius: 5px;
   font-weight: 600;
   transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+  display: inline-block;
+  white-space: nowrap;
 }
 
-.btn-contato-header:hover {
+.header-right-controls.desktop-only .btn-contato-header:hover {
   background-color: var(--accent-color);
   border-color: var(--accent-color);
   color: var(--darker-bg);
@@ -119,13 +140,18 @@
   font-size: 1.5rem;
 }
 
-/* Botão de menu mobile */
+/* Botão de menu mobile (fica fora do container) */
 .menu-toggle {
-  display: none;
+  display: none; /* Escondido por padrão */
   background: none;
   border: none;
   color: var(--text-color);
   font-size: 1.5rem;
   cursor: pointer;
   z-index: 1001;
+  /* Posicionamento absoluto para ficar à direita da tela */
+  position: absolute;
+  right: 30px; /* Ajuste conforme necessário */
+  top: 50%;
+  transform: translateY(-50%);
 }

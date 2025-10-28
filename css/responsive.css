@@ -1,38 +1,45 @@
 /* css/responsive.css */
 
-@media (max-width: 900px) {
+@media (max-width: 1250px) {
+  /* Ponto onde o hambúrguer aparece */
+
   .main-header {
-    padding: 0 30px;
-    display: flex;
-    justify-content: space-between;
+    /* O padding é aplicado pelo container agora */
+    /* padding: 0 30px; */
+    display: flex; /* Garante que o header seja flex */
+    /* justify-content: space-between; */ /* Não necessário aqui */
+    align-items: center;
   }
 
-  /* Esconde navegação principal E o container da direita (que só tem idioma) */
-  .main-nav,
-  .header-right-controls {
-    display: none;
+  /* Container interno ainda existe, mas ajustamos o comportamento */
+  .header-container {
+    /* display: none !important; */ /* REMOVIDO - Mantém o container visível */
+    display: flex; /* Garante que ele seja flex */
+    justify-content: space-between; /* Espaça logo e toggle */
+    align-items: center;
+    width: 100%; /* Ocupa toda a largura do header */
+    /* Remove padding interno específico para mobile, usa o do .main-header */
+    padding: 0 30px; /* Adiciona padding aqui */
   }
 
-  /* Mostra o botão hamburguer */
+  /* ESCONDE a navegação principal (que está dentro do container) */
+  .main-nav {
+    display: none !important;
+  }
+
+  /* ESCONDE os controles da direita (desktop) (que estão dentro do container) */
+  .header-right-controls.desktop-only {
+    display: none !important;
+  }
+
+  /* MOSTRA o botão hamburguer (que está FORA do container no HTML) */
   .menu-toggle {
-    display: block;
+    display: block !important;
   }
-
-  /* Ajusta o logo para ocupar o espaço */
-  .logo-text {
-    order: 1;
-    flex-grow: 1;
-    min-width: 0;
-  } /* Logo ocupa espaço */
-  /* .header-right-controls { order: 2; } */ /* Não é mais necessário */
-  .menu-toggle {
-    order: 3;
-  } /* Hamburguer na direita */
 
   /* --- ESTILOS DO MENU HAMBURGUER ABERTO --- */
   .main-nav {
-    /* Estilos base do menu container */
-    display: none; /* Mantém escondido até ter .open */
+    display: none;
     flex-direction: column;
     position: fixed;
     top: 0;
@@ -48,7 +55,7 @@
   }
 
   .main-nav.open {
-    display: flex;
+    display: flex !important;
   }
 
   .main-nav ul {
@@ -57,19 +64,22 @@
   }
 
   .main-nav li {
-    margin: 15px 0; /* Espaço vertical reduzido um pouco */
+    margin: 15px 0;
   }
 
-  /* Mostra o LI do seletor de idioma DENTRO do menu */
-  .main-nav li.language-selector-li {
-    display: list-item;
-    margin-top: 25px; /* Espaço acima do seletor */
-    order: 10; /* Garante que fique por último (ou ajuste conforme preferir) */
+  /* MOSTRA os LIs de idioma e contato DENTRO do menu */
+  .main-nav li.mobile-only {
+    display: list-item !important;
+    margin-top: 25px;
+    order: 10;
+  }
+  .main-nav li.nav-contact-button-li.mobile-only {
+    order: 11;
   }
 
   /* Estilo do seletor DENTRO do menu */
   .main-nav .language-selector a {
-    font-size: 1rem; /* Tamanho um pouco maior no menu */
+    font-size: 1rem;
     padding: 5px 10px;
     color: #aaa;
   }
@@ -77,18 +87,12 @@
     color: var(--text-color);
   }
 
-  /* Mostra o LI do botão de contato DENTRO do menu */
-  .main-nav li.nav-contact-button-li {
-    display: list-item;
-    margin-top: 25px; /* Espaço antes do botão */
-    order: 11; /* Depois do idioma */
-  }
-
   /* Estilo do botão de contato DENTRO do menu */
   .main-nav .btn-contato-header {
     border: 2px solid var(--text-color);
     padding: 10px 20px;
     font-size: 1rem;
+    display: inline-block;
   }
   .main-nav .btn-contato-header:hover {
     background-color: var(--accent-color);
@@ -96,7 +100,7 @@
     color: var(--darker-bg);
   }
 
-  /* Ajustes gerais que já estavam aqui */
+  /* Ajustes gerais */
   .sobre-content {
     flex-direction: column;
     gap: 30px;
@@ -105,7 +109,7 @@
     order: -1;
   }
 
-  /* Footer em telas médias (mantém 2 colunas) */
+  /* Footer em telas médias */
   .footer-grid {
     grid-template-columns: 1fr 1fr;
     text-align: center;
@@ -121,12 +125,16 @@
 }
 
 @media (max-width: 768px) {
-  /* AJUSTES PARA MOBILE (A maioria já está coberta pelo 900px) */
+  /* AJUSTES PARA MOBILE */
 
-  /* Header mobile (altura e padding) */
   .main-header {
-    padding: 0 20px;
+    /* Padding já vem do .header-container agora */
+    /* padding: 0 20px; */
     height: var(--header-height-mobile);
+  }
+
+  .header-container {
+    padding: 0 20px; /* Ajusta o padding do container interno */
   }
 
   .hero-section {
@@ -138,7 +146,7 @@
     font-size: 1.3rem;
   }
 
-  /* Restante do mobile (como estava antes) */
+  /* Restante */
   .hero-content h1 {
     font-size: 2.5rem;
   }
@@ -159,7 +167,7 @@
     font-size: 2rem;
   }
 
-  /* Footer mobile (1 coluna) */
+  /* Footer mobile */
   .footer-grid {
     grid-template-columns: 1fr;
     text-align: center;
