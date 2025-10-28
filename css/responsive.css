@@ -1,93 +1,50 @@
 /* css/responsive.css */
 
-/*
- * 11. Responsividade Final (Media Queries)
- */
 @media (max-width: 900px) {
-  /* Header em telas médias */
   .main-header {
     padding: 0 30px;
-  }
-  .main-nav li {
-    margin: 0 10px;
-  }
-  .language-selector {
-    margin-right: 15px;
-  }
-  .btn-contato-header {
-    padding: 6px 10px;
-    font-size: 0.9rem;
+    display: flex;
+    justify-content: space-between;
   }
 
-  /* Ajustes gerais */
-  .sobre-content {
-    flex-direction: column;
-    gap: 30px;
-  }
-
-  .sobre-image {
-    order: -1;
-  }
-
-  /* Footer em telas médias: 2 colunas */
-  .footer-grid {
-    grid-template-columns: 1fr 1fr;
-    text-align: center;
-  }
-
-  .footer-logo {
-    grid-column: 1 / -1;
-    text-align: center;
-    margin-bottom: 20px;
-  }
-
-  .footer-contact-cta {
-    text-align: center;
-  }
-}
-
-@media (max-width: 768px) {
-  /* AJUSTES PARA MOBILE */
-
-  /* Header mobile */
-  .main-header {
-    padding: 0 20px;
-    height: var(--header-height-mobile);
-    background-color: transparent;
-  }
-
-  .main-header.scrolled {
-    background-color: var(--darker-bg);
-  }
-
-  .hero-section {
-    margin-top: var(--header-height-mobile);
-  }
-
+  /* Esconde navegação principal E o container da direita (que só tem idioma) */
   .main-nav,
   .header-right-controls {
     display: none;
   }
 
-  .logo-text a,
-  .main-header.scrolled .logo-text a {
-    font-size: 1.3rem;
+  /* Mostra o botão hamburguer */
+  .menu-toggle {
+    display: block;
   }
 
-  /* Menu hamburguer */
+  /* Ajusta o logo para ocupar o espaço */
+  .logo-text {
+    order: 1;
+    flex-grow: 1;
+    min-width: 0;
+  } /* Logo ocupa espaço */
+  /* .header-right-controls { order: 2; } */ /* Não é mais necessário */
+  .menu-toggle {
+    order: 3;
+  } /* Hamburguer na direita */
+
+  /* --- ESTILOS DO MENU HAMBURGUER ABERTO --- */
   .main-nav {
-    display: none;
+    /* Estilos base do menu container */
+    display: none; /* Mantém escondido até ter .open */
     flex-direction: column;
     position: fixed;
-    top: var(--header-height-mobile);
+    top: 0;
     left: 0;
     width: 100%;
-    height: calc(100vh - var(--header-height-mobile));
+    height: 100vh;
     overflow-y: auto;
     z-index: 999;
-    background-color: #111;
-    text-align: center;
-    padding: 20px 0;
+    background-color: rgba(0, 0, 0, 0.95);
+    justify-content: center;
+    align-items: center;
+    padding-top: var(--header-height-mobile);
   }
 
   .main-nav.open {
@@ -96,67 +53,127 @@
 
   .main-nav ul {
     flex-direction: column;
+    align-items: center;
   }
 
   .main-nav li {
-    margin: 15px 0;
+    margin: 15px 0; /* Espaço vertical reduzido um pouco */
   }
 
-  .menu-toggle {
-    display: block;
+  /* Mostra o LI do seletor de idioma DENTRO do menu */
+  .main-nav li.language-selector-li {
+    display: list-item;
+    margin-top: 25px; /* Espaço acima do seletor */
+    order: 10; /* Garante que fique por último (ou ajuste conforme preferir) */
   }
 
-  /* Restante do mobile */
+  /* Estilo do seletor DENTRO do menu */
+  .main-nav .language-selector a {
+    font-size: 1rem; /* Tamanho um pouco maior no menu */
+    padding: 5px 10px;
+    color: #aaa;
+  }
+  .main-nav .language-selector a.lang-active {
+    color: var(--text-color);
+  }
+
+  /* Mostra o LI do botão de contato DENTRO do menu */
+  .main-nav li.nav-contact-button-li {
+    display: list-item;
+    margin-top: 25px; /* Espaço antes do botão */
+    order: 11; /* Depois do idioma */
+  }
+
+  /* Estilo do botão de contato DENTRO do menu */
+  .main-nav .btn-contato-header {
+    border: 2px solid var(--text-color);
+    padding: 10px 20px;
+    font-size: 1rem;
+  }
+  .main-nav .btn-contato-header:hover {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    color: var(--darker-bg);
+  }
+
+  /* Ajustes gerais que já estavam aqui */
+  .sobre-content {
+    flex-direction: column;
+    gap: 30px;
+  }
+  .sobre-image {
+    order: -1;
+  }
+
+  /* Footer em telas médias (mantém 2 colunas) */
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    text-align: center;
+  }
+  .footer-logo {
+    grid-column: 1 / -1;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .footer-contact-cta {
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  /* AJUSTES PARA MOBILE (A maioria já está coberta pelo 900px) */
+
+  /* Header mobile (altura e padding) */
+  .main-header {
+    padding: 0 20px;
+    height: var(--header-height-mobile);
+  }
+
+  .hero-section {
+    margin-top: var(--header-height-mobile);
+  }
+
+  .logo-text a,
+  .main-header.scrolled .logo-text a {
+    font-size: 1.3rem;
+  }
+
+  /* Restante do mobile (como estava antes) */
   .hero-content h1 {
     font-size: 2.5rem;
   }
-
   .hero-content p {
     font-size: 1rem;
   }
-
   .btn-principal {
     padding: 12px 25px;
   }
-
   .solucoes-grid,
   .portifolio-grid {
     grid-template-columns: 1fr;
   }
-
   section {
     padding: 60px 0;
   }
-
   h2 {
     font-size: 2rem;
   }
 
-  /* Footer em telas pequenas: 1 coluna */
+  /* Footer mobile (1 coluna) */
   .footer-grid {
     grid-template-columns: 1fr;
     text-align: center;
     gap: 30px;
   }
-
   .footer-logo,
   .footer-contact-cta {
     text-align: center;
   }
-
-  /* ============================================= */
-  /* CENTRALIZAÇÃO DA LOGO NO FOOTER MOBILE      */
-  /* ============================================= */
   .footer-logo-img {
-    /* display: block já estava no footer.css */
-    /* Centraliza a imagem (que é display: block) */
     margin-left: auto;
     margin-right: auto;
-    /* Opcional: Reduzir um pouco a logo no mobile */
     height: 150px;
   }
-  /* ============================================= */
-
   .footer-contact-cta {
     margin-top: 10px;
   }
