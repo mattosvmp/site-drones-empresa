@@ -11,7 +11,7 @@
 
 /* Variáveis de cor e altura para fácil manutenção */
 :root {
-  --accent-color: #00bcd4; /* Azul/Ciano de destaque */
+  --accent-color: #ff8a00; /* Azul/Ciano de destaque */
   --dark-bg: #050505;
   --darker-bg: #000;
   --text-color: #fff;
@@ -91,4 +91,29 @@ h2 {
 .btn-principal:hover {
   background-color: #00a4b7;
   transform: translateY(-3px);
+}
+
+/*
+ * ATUALIZADO: Estilo para Títulos de Seção com Ícone
+ */
+h2.section-title-with-icon {
+  position: relative;
+  display: inline-flex; /* Garante que o ícone e o texto fiquem juntos */
+  align-items: center;
+  justify-content: center;
+}
+
+h2.section-title-with-icon::before {
+  content: url("../favicon.ico"); /* Carrega o favicon.ico (subindo um nível do dir 'css') */
+  width: 30px;
+  height: 30px;
+  margin-right: 25px;
+  margin-bottom: 25px;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+
+  /* --- AJUSTE DE ALINHAMENTO VERTICAL --- */
+  position: relative;
+  top: 4px; /* Ajuste este valor (ex: 3px, 5px) se necessário */
 }

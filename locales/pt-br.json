@@ -1,11 +1,11 @@
 {
-  "pageTitle": "DronyImagem - Drone Solutions",
+  "pageTitle": "DronyImagem - Soluções com Drones",
   "metaDescription": "Especialistas em filmagem com drones, transmissão ao vivo aérea e shows de drones com luzes. Transforme seu evento em um espetáculo visual.",
   "metaKeywords": "drone, filmagem aérea, show de drones, drones luzes, filmagem com drone, mato grosso, cuiabá, dronyimagem",
-  "ogTitle": "DronyImagem - Drone Solutions",
+  "ogTitle": "DronyImagem - Soluções com Drones",
   "ogDescription": "Especialistas em filmagem com drones, transmissão ao vivo aérea e shows de drones com luzes. Transforme seu evento em um espetáculo visual.",
   "ogSiteName": "DronyImagem",
-  "headerLogo": "DronyImagem",
+
   "navSolutions": "Soluções",
   "navPortfolio": "Portfólio",
   "navAbout": "Sobre",
@@ -13,10 +13,12 @@
   "navMission": "Missão",
   "navLumasky": "Lumasky",
   "navContact": "Entre em Contato",
+
   "heroTitle": "VOE ALTO<br />CRIE VISÃO",
   "heroSubtitle": "A DronyImagem é especialista em filmagem com drones, transmissão ao vivo aérea e shows de drones com luzes, criando experiências únicas que encantam o público e valorizam sua marca.",
   "heroButton": "Descubra Nossas Soluções",
-  "servicesTitle": "🚁 NOSSOS SERVIÇOS",
+
+  "servicesTitle": "Soluções",
   "servicesSubtitle": "Do céu ao seu público: filmagem, transmissão e espetáculos.",
   "serviceRealEstateTitle": "📸 Imagens aéreas de imóveis",
   "serviceRealEstateDesc": "Valorize seu imóvel ou empreendimento com fotos e vídeos aéreos de alta qualidade. Destaque a localização, infraestrutura e diferenciais de forma impactante para seus clientes.",
@@ -24,38 +26,49 @@
   "service2Desc": "Surpreenda seu público com uma transmissão ao vivo feita por drones, mostrando seu evento em tempo real com imagens estáveis e de alta qualidade. Perfeito para festivais, feiras, eventos esportivos e corporativos que precisam de impacto visual e cobertura completa.",
   "serviceLumaskyTitle": "✨ Representante Lumasky no Brasil",
   "service3Desc": "Encante o público com um show de drones sincronizados com luzes e música. Perfeito para aberturas de eventos, ativações de marca, inaugurações e celebrações especiais. Cada show é planejado com roteiro, animações e coreografias exclusivas, tornando o céu o palco principal do seu evento.",
-  "portfolioTitle": "🎥 PORTFólio / TRABALHO",
+
+  "portfolioTitle": "Portfólio",
   "portfolioSubtitle": "De filmagens aéreas a espetáculos de luzes com drones, a DronyImagem já transformou eventos corporativos, festivais e produções audiovisuais em experiências visuais únicas. Confira nossos projetos e veja como nossas filmagens aéreas e shows de drones impactam o público em cada detalhe.",
   "portfolioBtnPhotos": "📸 Galeria de Fotos",
   "portfolioBtnVideos": "🎬 Galeria de Vídeos",
-  "aboutTitle": "🧭 SOBRE",
+
+  "aboutTitle": "Sobre",
   "aboutSubtitle": "Tecnologia, criatividade e inovação no ar",
   "aboutIntro": "Criado por dois irmãos matogrossenses ficcionados em tecnologia e apaixonados por constante evoulução.",
   "aboutP1": "Na DronyImagem, unimos filmagem aérea profissional, transmissão de imagens ao vivo e shows de drones com luzes sincronizadas para transformar eventos em experiências memoráveis.",
   "aboutP2": "Nossa equipe é formada por profissionais especializados em audiovisual e pilotagem de drones, prontos para registrar cada momento com qualidade cinematográfica, segurança e precisão técnica.",
   "aboutP3": "Acreditamos que cada voo é uma oportunidade de contar uma nova história — do alto, com emoção e impacto. Com a DronyImagem, o seu evento ganha uma nova perspectiva e a visibilidade que ele merece.",
-  "valuesTitle": "NOSSOS VALORES",
-  "valuesSubtitle": "Os princípios que guiam nossa visão e excelência em cada serviço.",
+
+  "valuesTitle": "Valores",
+  "valuesSubtitle": "Abaixo estão os principais pontos que guiam nosso valor de marca:",
   "value1Title": "Experiências Memoráveis",
   "value1Desc": "Unimos tecnologia e criatividade para contar histórias do alto. Transformamos seu evento em um espetáculo visual único que encanta e gera emoção.",
   "value2Title": "Inovação e Tecnologia",
   "value2Desc": "Usamos tecnologia aérea de ponta—de shows de luzes a transmissões ao vivo—para dar ao seu evento uma nova perspectiva e o impacto visual que ele merece.",
   "value3Title": "Qualidade e Segurança",
   "value3Desc": "Garantimos precisão técnica e qualidade cinematográfica em cada voo. Nossa equipe especializada captura ângulos únicos com total segurança, valorizando sua marca.",
-  "missionTitle": "NOSSA MISSÃO",
-  "missionSubtitle": "Ser o elo entre o céu e a visão criativa, elevando a percepção e o impacto dos seus projetos.",
-  "missionDesc": "Nossa missão é transformar seu evento em um espetáculo visual memorable. Usamos tecnologia aérea de ponta—de filmagens cinematográficas a shows de luzes—para contar sua história do alto, com segurança, criatividade e impacto.",
+
+  "missionTitle": "Missão",
+  "missionSubtitle": "Ser uma visão criativa a partir do alto, elevando a percepção e o impacto dos seus projetos.",
+  "missionDesc": "Nossa missão é transformar seu evento em um espetáculo visual memorável. Usamos tecnologia aérea de ponta, a partir de filmagens cinematográficas a shows de luzes—para contar sua história do alto, com segurança, criatividade e impacto.",
+
   "contactTitle": "ENTRE EM CONTATO",
   "contactSubtitle": "Vamos conversar sobre o seu próximo projeto aéreo!",
   "formName": "Nome:",
   "formEmail": "Email:",
-  "formMessage": "Mensagem:",
+  "formPhone": "Telefone:",
+  "formMessage": "Descreva um pouco do seu evento ou projeto:",
   "formSubmit": "Enviar Mensagem",
   "contactAltText": "Ou fale conosco diretamente:",
+
   "footerNav": "Navegação",
   "footerLegal": "Legal",
   "footerTerms": "Termos de Serviço",
   "footerPrivacy": "Política de Privacidade",
   "footerRights": "Todos os direitos reservados.",
-  "footerDev": "Desenvolvido com paixão pela tecnologia aérea."
+  "footerDev": "Desenvolvido com paixão pela tecnologia aérea.",
+
+  "lumaskyPageLink": "lumasky.html",
+  "galleryPhotosPageLink": "galeria-fotos.html",
+  "galleryVideosPageLink": "galeria-videos.html"
 }
