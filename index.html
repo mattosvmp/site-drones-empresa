@@ -371,34 +371,56 @@
         <p class="subtitle" data-translate-key="contactSubtitle">
           Vamos conversar sobre o seu próximo projeto aéreo!
         </p>
-        <form
-          action="https://submit.formspark.io/SUA_ID_UNICA_AQUI"
-          method="POST"
-          class="contato-form"
-        >
+
+        <form id="whatsapp-form" class="contato-form">
           <div class="form-group">
             <label for="nome" data-translate-key="formName">Nome:</label>
             <input type="text" id="nome" name="nome" required />
           </div>
+
           <div class="form-group">
-            <label for="phone" data-translate-key="formPhone">Telefone:</label>
-            <input type="tel" id="phone" name="phone" required />
-          </div>
-          <div class="form-group">
-            <label for="email" data-translate-key="formEmail">Email:</label>
-            <input type="email" id="email" name="email" required />
-          </div>
-          <div class="form-group">
-            <label for="mensagem" data-translate-key="formMessage"
-              >Descreva um pouco do seu evento ou projeto:</label
-            >
-            <textarea
-              id="mensagem"
-              name="mensagem"
-              rows="5"
+            <label for="cidade">Qual a sua cidade?</label>
+            <input
+              type="text"
+              id="cidade"
+              name="cidade"
+              placeholder="Ex: Cuiabá - MT"
               required
-            ></textarea>
+            />
           </div>
+
+          <div class="form-group">
+            <label for="finalidade">Qual a finalidade?</label>
+            <select id="finalidade" name="finalidade" required>
+              <option value="" disabled selected>Escolha uma opção...</option>
+              <option value="Imobiliário (Fotos/Vídeos)">
+                Imobiliário (Fotos/Vídeos)
+              </option>
+              <option value="Acompanhamento de Obras">
+                Acompanhamento de Obras
+              </option>
+              <option value="Drone Light Show (Lumasky)">
+                Drone Light Show (Lumasky)
+              </option>
+              <option value="Evento Esportivo">Evento Esportivo</option>
+              <option value="Outro (Descreva no WhatsApp)">Outro</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="data-servico"
+              >Para quando você precisa? (Opcional)</label
+            >
+            <input type="date" id="data-servico" name="data-servico" />
+          </div>
+
+          <div class="form-group form-group-checkbox">
+            <input type="checkbox" id="edicao" name="edicao" />
+            <label for="edicao"
+              >Preciso também da edição das imagens/vídeos</label
+            >
+          </div>
+
           <button
             type="submit"
             class="btn-principal btn-submit"
@@ -407,6 +429,7 @@
             Enviar Mensagem
           </button>
         </form>
+
         <div class="contato-info-alternativa">
           <p data-translate-key="contactAltText">
             Ou fale conosco diretamente:
@@ -416,14 +439,13 @@
           </p>
           <p>
             ✉️
-            <a href="mailto:contato@dronyimagem.com.br"
-              >contato@dronyimagem.com.br</a
+            <a href="mailto:contatodronyimagem@gmail.com"
+              >contatodronyimagem@gmail.com</a
             >
           </p>
         </div>
       </div>
     </section>
-
     <footer class="main-footer">
       <div class="container">
         <div class="footer-grid">

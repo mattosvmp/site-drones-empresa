@@ -316,3 +316,33 @@
 .contato-info-alternativa a:hover {
   color: #fff;
 }
+
+/* No final de site-drones/css/sections.css */
+
+/* Estilo para o grupo do checkbox (edição) */
+.form-group-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center; /* Centraliza o checkbox e o texto */
+  margin-bottom: 25px;
+}
+.form-group-checkbox input[type="checkbox"] {
+  /* Reseta o tamanho padrão */
+  width: auto;
+  height: 18px;
+  width: 18px;
+  flex-shrink: 0;
+}
+.form-group-checkbox label {
+  margin-bottom: 0; /* Remove margem do label */
+  font-weight: normal;
+  color: #ccc;
+}
+
+/* Garante que o campo de data use o tema escuro do navegador */
+.form-group input[type="date"] {
+  color-scheme: dark;
+  /* Alinha o texto do placeholder (se houver) */
+  text-align: left;
+}

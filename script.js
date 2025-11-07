@@ -178,13 +178,6 @@ document.addEventListener("DOMContentLoaded", () => {
     languageLinks.forEach((link) => {
       link.classList.toggle("lang-active", link.dataset.lang === lang);
     });
-
-    // Opcional: Salvar a preferência de idioma no navegador
-    // try {
-    //    localStorage.setItem('preferredLanguage', lang);
-    // } catch (e) {
-    //    console.warn("Não foi possível salvar a preferência de idioma no localStorage.");
-    // }
   }
 
   // Adiciona o evento de clique para cada botão de idioma
@@ -195,19 +188,6 @@ document.addEventListener("DOMContentLoaded", () => {
       setLanguage(selectedLang); // Chama a função para aplicar o idioma
     });
   });
-
-  // Carrega o idioma inicial ao carregar a página
-  // Opcional: Tenta carregar do localStorage primeiro
-  // let initialLang = 'pt-br'; // Padrão
-  // try {
-  //    const preferredLanguage = localStorage.getItem('preferredLanguage');
-  //    if (preferredLanguage && ['pt-br', 'en', 'es'].includes(preferredLanguage)) {
-  //      initialLang = preferredLanguage;
-  //    }
-  // } catch(e) {
-  //    console.warn("Não foi possível ler a preferência de idioma do localStorage.");
-  // }
-  // setLanguage(initialLang);
 
   // Carrega PT-BR como padrão
   setLanguage("pt-br");
@@ -260,7 +240,6 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       // Garante que o vídeo comece no tempo certo se #t= estiver presente no carregamento inicial
-      // (Isso pode precisar de um listener 'loadedmetadata' para ser 100% confiável em todos os casos)
       video.addEventListener(
         "loadedmetadata",
         () => {
@@ -273,4 +252,52 @@ document.addEventListener("DOMContentLoaded", () => {
       ); // Executa apenas uma vez quando os metadados carregam
     }
   });
+
+  // 8. WHATSAPP FORM HANDLER (ATUALIZADO PARA CONVERSÃO)
+  const whatsappForm = document.getElementById("whatsapp-form");
+  if (whatsappForm) {
+    whatsappForm.addEventListener("submit", (event) => {
+      event.preventDefault(); // Impede o envio padrão do formulário
+
+      // --- Definições ---
+      const whatsappNumber = "5565999396490";
+
+      // --- Pegar os valores dos campos ---
+      const nome = document.getElementById("nome").value;
+      const cidade = document.getElementById("cidade").value;
+      const finalidade = document.getElementById("finalidade").value;
+      const dataServico = document.getElementById("data-servico").value; // Pega AAAA-MM-DD
+      const precisaEdicao = document.getElementById("edicao").checked; // Retorna true ou false
+
+      // --- Formatar a Data (para ficar DD/MM/AAAA) ---
+      let dataFormatada = "Ainda não sei / A combinar";
+      if (dataServico) {
+        // O input 'date' entrega AAAA-MM-DD
+        const [ano, mes, dia] = dataServico.split("-");
+        dataFormatada = `${dia}/${mes}/${ano}`;
+      }
+
+      // --- Formatar o Checkbox de Edição ---
+      const edicaoTexto = precisaEdicao ? "Sim" : "Não";
+
+      // --- Formatar a Mensagem Final ---
+      const textoMensagem =
+        `Olá, DronyImagem! Gostaria de um orçamento.\n\n` +
+        `*Nome:* ${nome}\n` +
+        `*Cidade:* ${cidade}\n` +
+        `*Finalidade:* ${finalidade}\n` +
+        `*Para quando precisa?* ${dataFormatada}\n` +
+        `*Precisa de edição?* ${edicaoTexto}\n\n` +
+        `------------------\n` +
+        `*(Se possível, por favor, anexe aqui qualquer imagem ou referência do projeto que você tenha.)*`;
+
+      // --- Criar e Abrir o Link ---
+      const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
+        textoMensagem
+      )}`;
+
+      // Abre o WhatsApp em uma nova aba
+      window.open(whatsappUrl, "_blank");
+    });
+  }
 }); // Fim do DOMContentLoaded
