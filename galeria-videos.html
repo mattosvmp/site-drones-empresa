@@ -62,11 +62,33 @@
         margin-bottom: 40px;
         font-style: italic;
       }
-      .page-content .placeholder {
-        font-size: 1.1rem;
-        color: #ccc;
-        line-height: 1.8;
-        text-align: center;
+
+      /* CSS PARA O VÍDEO */
+
+      /* Invólucro para o vídeo do "Shorts" */
+      .video-wrapper-shorts {
+        position: relative;
+        /* Define a proporção 9:16 (vertical) */
+        padding-top: 177.77%; /* (16 / 9 * 100) */
+        height: 0;
+        overflow: hidden;
+        border-radius: 12px;
+
+        /* Limita o tamanho no desktop para parecer um celular */
+        max-width: 320px;
+        margin: 0 auto; /* Centraliza o vídeo */
+        border: 1px solid #333;
+        background-color: #111;
+      }
+
+      /* O Iframe preenche o invólucro */
+      .video-wrapper-shorts iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
       }
     </style>
   </head>
@@ -86,9 +108,18 @@
       <div class="container">
         <h1>Galeria de Vídeos</h1>
         <p class="subtitle">Nossas melhores produções aéreas em movimento.</p>
-        <p class="placeholder">
-          Nossa galeria de vídeos está sendo atualizada. Volte em breve!
-        </p>
+
+        <div class="video-wrapper-shorts">
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/-JheMRuMROc"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+          ></iframe>
+        </div>
       </div>
     </main>
   </body>
