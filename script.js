@@ -253,7 +253,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // 8. WHATSAPP FORM HANDLER (ATUALIZADO PARA CONVERSÃO)
+  // 8. WHATSAPP FORM HANDLER (ATUALIZADO PARA GOOGLE ANALYTICS GA4)
   const whatsappForm = document.getElementById("whatsapp-form");
   if (whatsappForm) {
     whatsappForm.addEventListener("submit", (event) => {
@@ -266,13 +266,12 @@ document.addEventListener("DOMContentLoaded", () => {
       const nome = document.getElementById("nome").value;
       const cidade = document.getElementById("cidade").value;
       const finalidade = document.getElementById("finalidade").value;
-      const dataServico = document.getElementById("data-servico").value; // Pega AAAA-MM-DD
-      const precisaEdicao = document.getElementById("edicao").checked; // Retorna true ou false
+      const dataServico = document.getElementById("data-servico").value;
+      const precisaEdicao = document.getElementById("edicao").checked;
 
       // --- Formatar a Data (para ficar DD/MM/AAAA) ---
       let dataFormatada = "Ainda não sei / A combinar";
       if (dataServico) {
-        // O input 'date' entrega AAAA-MM-DD
         const [ano, mes, dia] = dataServico.split("-");
         dataFormatada = `${dia}/${mes}/${ano}`;
       }
@@ -291,12 +290,22 @@ document.addEventListener("DOMContentLoaded", () => {
         `------------------\n` +
         `*(Se possível, por favor, anexe aqui qualquer imagem ou referência do projeto que você tenha.)*`;
 
-      // --- Criar e Abrir o Link ---
+      // --- 1. DISPARAR O EVENTO DO GOOGLE ANALYTICS (GA4) ---
+      // Nós damos um nome ao evento (ex: 'clique_whatsapp')
+      // e enviamos os dados do formulário como parâmetros.
+      if (typeof gtag === "function") {
+        gtag("event", "clique_whatsapp", {
+          event_category: "formulario_contato",
+          event_label: finalidade, // Envia a finalidade como um rótulo
+          cidade: cidade, // Podemos até enviar a cidade
+        });
+      }
+
+      // --- 2. ABRIR O WHATSAPP ---
+      // (Não precisamos mais esperar pelo callback)
       const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
         textoMensagem
       )}`;
-
-      // Abre o WhatsApp em uma nova aba
       window.open(whatsappUrl, "_blank");
     });
   }
