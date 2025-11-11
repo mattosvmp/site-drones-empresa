@@ -1,5 +1,3 @@
-/* css/footer.css */
-
 .main-footer {
   background-color: var(--dark-bg);
   padding: 40px 0 20px;
@@ -68,4 +66,34 @@
 
 .footer-bottom p {
   margin-bottom: 5px;
+}
+
+.footer-socials {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+@media (max-width: 1250px) {
+  .footer-socials {
+    justify-content: center;
+  }
+}
+
+.footer-socials a {
+  display: inline-block;
+  line-height: 0;
+}
+
+.footer-socials a svg {
+  width: 28px;
+  height: 28px;
+  fill: #777;
+  transition: fill 0.3s ease, transform 0.3s ease;
+}
+
+.footer-socials a:hover svg {
+  fill: var(--accent-color);
+  transform: translateY(-2px);
 }

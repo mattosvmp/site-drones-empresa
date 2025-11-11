@@ -1,5 +1,3 @@
-/* css/hero.css */
-
 .hero-section {
   min-height: 100vh;
   margin-top: 0;
@@ -61,4 +59,31 @@
 .hero-content p {
   font-size: 1.2rem;
   margin-bottom: 15px;
+}
+
+.hero-socials {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+  margin-top: 40px;
+}
+
+.hero-socials a {
+  display: inline-block;
+  line-height: 0;
+}
+
+.hero-socials a svg {
+  width: 30px;
+  height: 30px;
+  fill: #ffffff;
+  opacity: 0.8;
+  transition: fill 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+}
+
+.hero-socials a:hover svg {
+  fill: var(--accent-color);
+  opacity: 1;
+  transform: scale(1.1);
 }
