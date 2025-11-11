@@ -1,29 +1,20 @@
-/* css/base.css */
-
-/*
- * 1. Reset Básico & Estilos Globais
- */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Variáveis de cor e altura para fácil manutenção */
 :root {
-  --accent-color: #ff8a00; /* Azul/Ciano de destaque */
+  --accent-color: #ff8a00;
   --dark-bg: #050505;
   --darker-bg: #000;
   --text-color: #fff;
 
-  /* ALTURAS DO HEADER NOS DOIS ESTADOS */
-  --header-height-large: 100px; /* Grande (Hero Section) */
-  --header-height-small: 60px; /* Minimalista (Após scroll) */
-
-  --header-height-mobile: 65px; /* Mobile (Altura única, não encolhe) */
+  --header-height-large: 100px;
+  --header-height-small: 60px;
+  --header-height-mobile: 65px;
 }
 
-/* === RESET DE FOCO UNIVERSAL (Solução Invasiva) === */
 *:focus,
 a:focus,
 button:focus,
@@ -34,7 +25,6 @@ button:focus,
   border: none !important;
   text-decoration: none !important;
 }
-/* ==================================================== */
 
 body {
   font-family: "Montserrat", sans-serif;
@@ -77,7 +67,6 @@ h2 {
   margin-bottom: 60px;
 }
 
-/* Botão principal genérico */
 .btn-principal {
   display: inline-block;
   padding: 15px 30px;
@@ -93,27 +82,32 @@ h2 {
   transform: translateY(-3px);
 }
 
-/*
- * ATUALIZADO: Estilo para Títulos de Seção com Ícone
- */
 h2.section-title-with-icon {
   position: relative;
-  display: inline-flex; /* Garante que o ícone e o texto fiquem juntos */
+  display: inline-flex;
   align-items: center;
   justify-content: center;
 }
 
+/* * REGRA CORRIGIDA ABAIXO
+ * (Usa background-image e background-size para forçar o tamanho do SVG)
+*/
 h2.section-title-with-icon::before {
-  content: url("../favicon.ico"); /* Carrega o favicon.ico (subindo um nível do dir 'css') */
-  width: 30px;
-  height: 30px;
+  content: "";
+  display: inline-block;
+
+  background-image: url("../icon-dronyimagem.svg");
+  background-size: 80px 80px;
+  background-repeat: no-repeat;
+
+  width: 80px;
+  height: 80px;
+
   margin-right: 25px;
-  margin-bottom: 25px;
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
 
-  /* --- AJUSTE DE ALINHAMENTO VERTICAL --- */
   position: relative;
-  top: 4px; /* Ajuste este valor (ex: 3px, 5px) se necessário */
+  top: 4px;
 }
