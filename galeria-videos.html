@@ -3,21 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=AW-17693491481"
-    ></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-
-      gtag("config", "AW-17693491481");
-
-      gtag("config", "G-XPLS30LR38");
-    </script>
     <title>Galeria de Vídeos - DronyImagem</title>
     <link rel="stylesheet" href="css/style.css" />
     <link
@@ -60,7 +45,7 @@
         padding: 60px 0;
       }
       .page-content .container {
-        max-width: 800px; /* Mantém o container centralizado */
+        max-width: 800px;
       }
       .page-content h1 {
         font-size: 2.8rem;
@@ -78,10 +63,9 @@
         font-style: italic;
       }
 
-      /* --- CSS PARA O PLAYER DE VÍDEO (16:9) --- */
       .video-wrapper {
         position: relative;
-        padding-top: 56.25%; /* Proporção 16:9 */
+        padding-top: 56.25%;
         height: 0;
         overflow: hidden;
         border-radius: 12px;
@@ -99,18 +83,16 @@
         border: 0;
       }
 
-      /* --- CSS PARA TÍTULOS DE TÓPICO --- */
       .video-topic-title {
         font-size: 1.8rem;
         font-weight: 700;
-        color: #fff; /* Branco */
-        margin-top: 60px; /* Espaço ACIMA do título */
-        margin-bottom: 20px; /* Espaço ABAIXO do título */
+        color: #fff;
+        margin-top: 60px;
+        margin-bottom: 20px;
         text-align: left;
         border-bottom: 1px solid var(--accent-color);
         padding-bottom: 10px;
       }
-      /* Adiciona margem ao primeiro título para não colar no subtítulo */
       .video-topic-title:first-of-type {
         margin-top: 40px;
       }
@@ -133,12 +115,25 @@
         <h1>Galeria de Vídeos</h1>
         <p class="subtitle">Nossas melhores produções aéreas em movimento.</p>
 
-        <h2 class="video-topic-title">Produções e Eventos</h2>
+        <h2 class="video-topic-title">Estabelecimentos Comerciais</h2>
         <div class="video-wrapper">
           <iframe
             width="560"
             height="315"
             src="https://www.youtube.com/embed/a5HMyLuj_Cc"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+          ></iframe>
+        </div>
+
+        <h2 class="video-topic-title">Eventos</h2>
+        <div class="video-wrapper">
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/-T541ZVwkWk"
             title="YouTube video player"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
