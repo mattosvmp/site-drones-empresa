@@ -97,3 +97,49 @@
   fill: var(--accent-color);
   transform: translateY(-2px);
 }
+
+/* ADICIONE ESTE NOVO BLOCO NO FINAL */
+
+.sancticom-credit {
+  margin-top: 15px;
+  padding-top: 10px;
+  border-top: 1px solid #1a1a1a; /* Linha de separação sutil */
+}
+
+.sancticom-credit a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px; /* Espaço entre o ícone e o texto */
+  color: #777; /* Cor padrão do texto do footer */
+  transition: color 0.3s ease;
+}
+
+.sancticom-credit a:hover {
+  color: #fff; /* Destaque no hover */
+}
+
+.sancticom-credit img {
+  width: 50px; /* Tamanho do ícone minimalista */
+  height: 50px;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.sancticom-credit a:hover img {
+  opacity: 1;
+}
+
+.sancticom-credit span {
+  font-size: 0.9rem; /* Mesmo tamanho do texto do footer */
+}
+
+.sancticom-credit strong {
+  color: #999;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.sancticom-credit a:hover strong {
+  color: #fff;
+}
