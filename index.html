@@ -323,6 +323,7 @@
             <a
               href="lumasky.html"
               class="card-link-overlay"
+              data-translate-key="lumaskyAriaLabel"
               aria-label="Saiba mais sobre shows com Lumasky"
               data-translate-href="lumaskyPageLink"
             >
@@ -395,7 +396,11 @@
             </p>
           </div>
           <div class="sobre-image">
-            <img src="image4.png" alt="Equipe DronyImagem em campo" />
+            <img
+              src="image4.png"
+              data-translate-key="aboutImageAlt"
+              alt="Equipe DronyImagem em campo"
+            />
           </div>
         </div>
       </div>
@@ -474,36 +479,67 @@
           </div>
 
           <div class="form-group">
-            <label for="cidade">Qual a sua cidade?</label>
+            <label for="cidade" data-translate-key="formCityLabel"
+              >Qual a sua cidade?</label
+            >
             <input
               type="text"
               id="cidade"
               name="cidade"
+              data-translate-key="formCityPlaceholder"
               placeholder="Ex: Cuiabá - MT"
               required
             />
           </div>
 
           <div class="form-group">
-            <label for="finalidade">Qual a finalidade?</label>
+            <label for="finalidade" data-translate-key="formPurposeLabel"
+              >Qual a finalidade?</label
+            >
             <select id="finalidade" name="finalidade" required>
-              <option value="" disabled selected>Escolha uma opção...</option>
-              <option value="Imobiliário (Fotos/Vídeos)">
+              <option
+                value=""
+                disabled
+                selected
+                data-translate-key="formPurposeDefaultOption"
+              >
+                Escolha uma opção...
+              </option>
+              <option
+                value="Imobiliário (Fotos/Vídeos)"
+                data-translate-key="formPurposeOpt1"
+              >
                 Imobiliário (Fotos/Vídeos)
               </option>
-              <option value="Acompanhamento de Obras">
+              <option
+                value="Acompanhamento de Obras"
+                data-translate-key="formPurposeOpt2"
+              >
                 Acompanhamento de Obras
               </option>
-              <option value="Drone Light Show (Lumasky)">
+              <option
+                value="Drone Light Show (Lumasky)"
+                data-translate-key="formPurposeOpt3"
+              >
                 Drone Light Show (Lumasky)
               </option>
-              <option value="Evento Esportivo">Evento Esportivo</option>
-              <option value="Outro (Descreva no WhatsApp)">Outro</option>
+              <option
+                value="Evento Esportivo"
+                data-translate-key="formPurposeOpt4"
+              >
+                Evento Esportivo
+              </option>
+              <option
+                value="Outro (Descreva no WhatsApp)"
+                data-translate-key="formPurposeOpt5"
+              >
+                Outro (Descreva no WhatsApp)
+              </option>
             </select>
           </div>
 
           <div class="form-group">
-            <label for="data-servico"
+            <label for="data-servico" data-translate-key="formDateLabel"
               >Para quando você precisa? (Opcional)</label
             >
             <input type="date" id="data-servico" name="data-servico" />
@@ -511,7 +547,7 @@
 
           <div class="form-group form-group-checkbox">
             <input type="checkbox" id="edicao" name="edicao" />
-            <label for="edicao"
+            <label for="edicao" data-translate-key="formEditionLabel"
               >Preciso também da edição das imagens/vídeos</label
             >
           </div>
