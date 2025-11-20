@@ -53,6 +53,29 @@
         color: var(--text-color);
         text-decoration: none;
       }
+
+      /* NOVO ESTILO: Container para alinhar seletor e link */
+      .header-right-controls {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      /* NOVO ESTILO: Seletor de Idioma */
+      .language-selector a {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #aaa;
+        padding: 0 5px;
+        transition: color 0.3s;
+        white-space: nowrap;
+      }
+
+      .language-selector a:hover,
+      .language-selector a.lang-active {
+        color: var(--text-color);
+      }
+
       .back-link a {
         color: var(--accent-color);
         text-decoration: none;
@@ -93,10 +116,19 @@
         <div class="simple-logo">
           <a href="index.html">DronyImagem</a>
         </div>
-        <div class="back-link">
-          <a href="index.html#portifolio" data-translate-key="backToPortfolio"
-            >← Voltar ao Portfólio</a
-          >
+        <div class="header-right-controls">
+          <div class="language-selector">
+            <a href="#" class="lang-link lang-active" data-lang="pt-br"
+              >🇧🇷 PT-BR</a
+            >
+            <a href="#" class="lang-link" data-lang="en">🇺🇸 EN</a>
+            <a href="#" class="lang-link" data-lang="es">🇪🇸 ES</a>
+          </div>
+          <div class="back-link">
+            <a href="index.html#portifolio" data-translate-key="backToPortfolio"
+              >← Voltar ao Portfólio</a
+            >
+          </div>
         </div>
       </div>
     </header>

@@ -56,6 +56,29 @@
         color: var(--text-color);
         text-decoration: none;
       }
+
+      /* NOVO ESTILO: Container para alinhar seletor e link */
+      .header-right-controls {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      /* NOVO ESTILO: Seletor de Idioma */
+      .language-selector a {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #aaa;
+        padding: 0 5px;
+        transition: color 0.3s;
+        white-space: nowrap;
+      }
+
+      .language-selector a:hover,
+      .language-selector a.lang-active {
+        color: var(--text-color);
+      }
+
       .back-link a {
         color: var(--accent-color);
         text-decoration: none;
@@ -117,10 +140,19 @@
         <div class="simple-logo">
           <a href="index.html">DronyImagem</a>
         </div>
-        <div class="back-link">
-          <a href="index.html#solucoes" data-translate-key="backToSolutions"
-            >← Voltar para Soluções</a
-          >
+        <div class="header-right-controls">
+          <div class="language-selector">
+            <a href="#" class="lang-link lang-active" data-lang="pt-br"
+              >🇧🇷 PT-BR</a
+            >
+            <a href="#" class="lang-link" data-lang="en">🇺🇸 EN</a>
+            <a href="#" class="lang-link" data-lang="es">🇪🇸 ES</a>
+          </div>
+          <div class="back-link">
+            <a href="index.html#solucoes" data-translate-key="backToSolutions"
+              >← Voltar para Soluções</a
+            >
+          </div>
         </div>
       </div>
     </header>
@@ -173,7 +205,7 @@
           Seja para o lançamento de um produto, a abertura de um festival, uma
           celebração corporativa, um casamento grandioso ou uma ativação de
           marca, os shows de drones são a escolha perfeita para quem busca
-          inovação e um impacto visual inigualável. O céu é, literalmente, o
+          inovações e um impacto visual inigualável. O céu é, literalmente, o
           palco principal.
         </p>
 

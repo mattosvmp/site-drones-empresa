@@ -4,21 +4,25 @@
  */
 
 document.addEventListener("DOMContentLoaded", () => {
+  // OBTÉM O CABEÇALHO PRINCIPAL (só existe no index.html)
   const mainHeader = document.querySelector(".main-header");
   const scrollThreshold = 50;
 
-  // 1. HEADER ENCOLHÍVEL
-  const checkScroll = () => {
-    mainHeader.classList.toggle("scrolled", window.scrollY > scrollThreshold);
-  };
-  window.addEventListener("scroll", checkScroll);
-  window.addEventListener("resize", checkScroll);
-  checkScroll();
+  // 1. HEADER ENCOLHÍVEL (SÓ EXECUTA SE mainHeader EXISTIR)
+  if (mainHeader) {
+    const checkScroll = () => {
+      mainHeader.classList.toggle("scrolled", window.scrollY > scrollThreshold);
+    };
+    window.addEventListener("scroll", checkScroll);
+    window.addEventListener("resize", checkScroll);
+    checkScroll();
+  }
 
   // 2. MENU RESPONSIVO
   const menuToggle = document.querySelector(".menu-toggle");
   const mainNav = document.querySelector(".main-nav");
-  const navLinks = document.querySelectorAll(".main-nav a");
+  // Agora também seleciona links dentro de .simple-header para fechar o menu, se existir
+  const navLinks = document.querySelectorAll(".main-nav a, .simple-header a");
 
   if (menuToggle && mainNav) {
     const updateMenuToggleIcon = (isExpanded) => {
@@ -194,33 +198,34 @@ document.addEventListener("DOMContentLoaded", () => {
   // 7. VÍDEOS COM PLAY NO HOVER
   const videoItems = document.querySelectorAll(".solucao-item");
 
-  videoItems.forEach((item) => {
-    const video = item.querySelector(".solucao-video");
-    if (video) {
-      item.addEventListener("mouseenter", () => {
-        // Ignora erro se autoplay for bloqueado
-        video.play().catch((error) => {});
-      });
+  if (videoItems.length > 0) {
+    // Garante que só executa se estiver no index.html
+    videoItems.forEach((item) => {
+      const video = item.querySelector(".solucao-video");
+      if (video) {
+        item.addEventListener("mouseenter", () => {
+          video.play().catch((error) => {});
+        });
 
-      item.addEventListener("mouseleave", () => {
-        video.pause();
-        const srcTimeFragment = video.currentSrc.split("#t=")[1];
-        // Reseta o tempo do vídeo (para 0 ou para o tempo marcado em #t=)
-        video.currentTime = srcTimeFragment ? parseFloat(srcTimeFragment) : 0;
-      });
+        item.addEventListener("mouseleave", () => {
+          video.pause();
+          const srcTimeFragment = video.currentSrc.split("#t=")[1];
+          video.currentTime = srcTimeFragment ? parseFloat(srcTimeFragment) : 0;
+        });
 
-      video.addEventListener(
-        "loadedmetadata",
-        () => {
-          const srcTimeOnLoad = video.currentSrc.split("#t=")[1];
-          if (srcTimeOnLoad) {
-            video.currentTime = parseFloat(srcTimeOnLoad);
-          }
-        },
-        { once: true }
-      );
-    }
-  });
+        video.addEventListener(
+          "loadedmetadata",
+          () => {
+            const srcTimeOnLoad = video.currentSrc.split("#t=")[1];
+            if (srcTimeOnLoad) {
+              video.currentTime = parseFloat(srcTimeOnLoad);
+            }
+          },
+          { once: true }
+        );
+      }
+    });
+  }
 
   // 8. WHATSAPP FORM HANDLER (ATUALIZADO PARA GOOGLE ANALYTICS GA4)
   const whatsappForm = document.getElementById("whatsapp-form");
