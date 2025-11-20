@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // 2. MENU RESPONSIVO
   const menuToggle = document.querySelector(".menu-toggle");
   const mainNav = document.querySelector(".main-nav");
-  // Agora também seleciona links dentro de .simple-header para fechar o menu, se existir
+  // Seleciona links dentro do main-nav e do simple-header (links de voltar)
   const navLinks = document.querySelectorAll(".main-nav a, .simple-header a");
 
   if (menuToggle && mainNav) {
