@@ -1,6 +1,6 @@
 /**
  * script.js
- * Funcionalidades: Header, Menu, Ano, Foco, Tradução via JSON, Voltar Topo, Vídeo Hover.
+ * Funcionalidades: Header, Menu, Ano, Foco, Tradução via JSON (com Persistência), Voltar Topo, Vídeo Hover, WhatsApp Form.
  */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -9,11 +9,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 1. HEADER ENCOLHÍVEL
   const checkScroll = () => {
-    // Adiciona ou remove a classe 'scrolled' baseando na posição de rolagem
-    // Usa uma forma mais concisa com classList.toggle
     mainHeader.classList.toggle("scrolled", window.scrollY > scrollThreshold);
   };
-  // Adiciona listeners para rolagem e redimensionamento, e executa uma vez ao carregar
   window.addEventListener("scroll", checkScroll);
   window.addEventListener("resize", checkScroll);
   checkScroll();
@@ -21,27 +18,25 @@ document.addEventListener("DOMContentLoaded", () => {
   // 2. MENU RESPONSIVO
   const menuToggle = document.querySelector(".menu-toggle");
   const mainNav = document.querySelector(".main-nav");
-  const navLinks = document.querySelectorAll(".main-nav a"); // Seleciona todos os links dentro da nav
+  const navLinks = document.querySelectorAll(".main-nav a");
 
   if (menuToggle && mainNav) {
-    // Alterna a classe 'open' no menu e atualiza atributos ARIA no botão
+    const updateMenuToggleIcon = (isExpanded) => {
+      menuToggle.setAttribute("aria-expanded", isExpanded);
+      menuToggle.innerHTML = isExpanded ? "&#10005;" : "&#9776;";
+    };
+
     menuToggle.addEventListener("click", () => {
       mainNav.classList.toggle("open");
-      const isExpanded = mainNav.classList.contains("open");
-      menuToggle.setAttribute("aria-expanded", isExpanded);
-      menuToggle.innerHTML = isExpanded ? "&#10005;" : "&#9776;"; // Muda ícone para X ou hambúrguer
+      updateMenuToggleIcon(mainNav.classList.contains("open"));
     });
 
-    // Fecha o menu ao clicar em um link interno (não abre nova aba)
     navLinks.forEach((link) => {
-      // Verifica se o link não tem target="_blank"
       if (!link.target || link.target !== "_blank") {
         link.addEventListener("click", () => {
-          // Se o menu estiver aberto, fecha-o
           if (mainNav.classList.contains("open")) {
             mainNav.classList.remove("open");
-            menuToggle.innerHTML = "&#9776;"; // Volta ícone para hambúrguer
-            menuToggle.setAttribute("aria-expanded", "false");
+            updateMenuToggleIcon(false);
           }
         });
       }
@@ -51,11 +46,10 @@ document.addEventListener("DOMContentLoaded", () => {
   // 3. ANO AUTOMÁTICO NO RODAPÉ
   const currentYearEl = document.getElementById("current-year");
   if (currentYearEl) {
-    currentYearEl.textContent = new Date().getFullYear(); // Insere o ano atual
+    currentYearEl.textContent = new Date().getFullYear();
   }
 
   // 4. CORREÇÃO DE FOCO INICIAL (Opcional)
-  // Tenta remover o foco de qualquer elemento ativo ao carregar a página
   const shiftInitialFocus = () => {
     if (document.activeElement && document.activeElement !== document.body) {
       document.activeElement.blur();
@@ -63,80 +57,63 @@ document.addEventListener("DOMContentLoaded", () => {
   };
   shiftInitialFocus();
 
-  // 5. LÓGICA DE TRADUÇÃO (CARREGANDO JSON)
-  const languageLinks = document.querySelectorAll(".lang-link"); // Seleciona os botões/links de idioma
-  // Seleciona todos os elementos que têm uma chave de tradução de texto ou de link
+  // 5. LÓGICA DE TRADUÇÃO (CARREGANDO JSON E PERSISTÊNCIA)
+  const languageLinks = document.querySelectorAll(".lang-link");
   const translatableElements = document.querySelectorAll(
     "[data-translate-key], [data-translate-href]"
   );
-  let currentTranslations = {}; // Cache para guardar traduções já carregadas
+  let currentTranslations = {};
 
   // Função assíncrona para buscar o arquivo JSON de tradução
   async function fetchTranslations(lang) {
-    // Se já carregamos este idioma antes, retorna do cache
     if (currentTranslations[lang]) return currentTranslations[lang];
 
     try {
-      // Tenta buscar o arquivo JSON correspondente ao idioma
       const response = await fetch(`locales/${lang}.json`);
-      // Se o arquivo não for encontrado ou houver erro no servidor
       if (!response.ok) {
         console.error(
           `Não foi possível carregar o arquivo de tradução para o idioma: ${lang}. Status: ${response.status}`
         );
-        return null; // Retorna nulo para indicar falha
+        return null;
       }
-      // Converte a resposta em JSON
       const translations = await response.json();
-      // Armazena no cache
       currentTranslations[lang] = translations;
-      return translations; // Retorna as traduções
+      return translations;
     } catch (error) {
-      // Captura erros de rede ou de parse do JSON
       console.error(
         `Erro ao buscar ou processar o arquivo de tradução para ${lang}:`,
         error
       );
-      return null; // Retorna nulo para indicar falha
+      return null;
     }
   }
 
   // Função assíncrona para aplicar as traduções na página
   async function setLanguage(lang) {
-    // Busca as traduções para o idioma solicitado
     const translations = await fetchTranslations(lang);
 
-    // Se a busca falhou (retornou nulo)
     if (!translations) {
-      // Se o idioma solicitado não era o padrão (pt-br), tenta carregar o pt-br como fallback
       if (lang !== "pt-br") {
         console.warn(
           `Fallback para pt-br porque ${lang}.json não foi encontrado ou é inválido.`
         );
-        await setLanguage("pt-br"); // Chama a função novamente com 'pt-br'
+        await setLanguage("pt-br");
       }
-      return; // Interrompe a função se não houver traduções
+      return;
     }
 
-    // Define o atributo 'lang' na tag <html> para acessibilidade e SEO
-    document.documentElement.lang = lang.replace("_", "-"); // ex: pt_br -> pt-BR
+    document.documentElement.lang = lang.replace("_", "-");
 
-    // Percorre todos os elementos marcados para tradução
     translatableElements.forEach((el) => {
-      const key = el.dataset.translateKey; // Chave para tradução de texto
-      const hrefKey = el.dataset.translateHref; // Chave para tradução de link (href)
+      const key = el.dataset.translateKey;
+      const hrefKey = el.dataset.translateHref;
 
-      // Se o elemento tem uma chave de texto
       if (key) {
-        const translation = translations[key]; // Busca a tradução no JSON carregado
+        const translation = translations[key];
         if (translation !== undefined) {
-          // Se encontrou a tradução
-          // Casos especiais:
           if (key === "heroTitle") {
-            // Permite HTML (como <br>) no título do Hero
             el.innerHTML = translation;
           } else if (el.tagName === "META") {
-            // Atualiza o atributo 'content' de meta tags
             if (
               el.getAttribute("name") === "description" ||
               el.getAttribute("name") === "keywords"
@@ -146,35 +123,34 @@ document.addEventListener("DOMContentLoaded", () => {
               el.getAttribute("property") &&
               el.getAttribute("property").startsWith("og:")
             ) {
-              el.setAttribute("content", translation); // Para Open Graph tags
+              el.setAttribute("content", translation);
             }
           } else if (el.tagName === "TITLE") {
-            // Atualiza o título da página na aba
             document.title = translation;
+          } else if (el.hasAttribute("placeholder")) {
+            // Tradução para placeholder
+            el.setAttribute("placeholder", translation);
+          } else if (el.hasAttribute("alt")) {
+            // Tradução para alt
+            el.setAttribute("alt", translation);
+          } else if (el.hasAttribute("aria-label")) {
+            // Tradução para aria-label
+            el.setAttribute("aria-label", translation);
           } else {
-            // Para a maioria dos elementos (p, h2, a, label, etc.)
-            el.textContent = translation; // Define o texto simples
+            // Tradução de texto padrão
+            el.textContent = translation;
           }
-        } else {
-          // Opcional: Avisa no console se uma tradução está faltando
-          // console.warn(`Tradução faltando para a chave "${key}" no idioma "${lang}"`);
         }
       }
 
-      // Se o elemento tem uma chave de href
       if (hrefKey) {
-        const linkTranslation = translations[hrefKey]; // Busca o valor do link no JSON
-        // Garante que encontrou a tradução e que o elemento é um link (<a>)
+        const linkTranslation = translations[hrefKey];
         if (linkTranslation !== undefined && el.tagName === "A") {
-          el.setAttribute("href", linkTranslation); // Atualiza o atributo href
-        } else if (linkTranslation === undefined) {
-          // Opcional: Avisa se o link não foi encontrado
-          // console.warn(`Link não encontrado para a chave "${hrefKey}" no idioma "${lang}"`);
+          el.setAttribute("href", linkTranslation);
         }
       }
     });
 
-    // Atualiza qual botão de idioma está com a classe 'lang-active'
     languageLinks.forEach((link) => {
       link.classList.toggle("lang-active", link.dataset.lang === lang);
     });
@@ -183,63 +159,56 @@ document.addEventListener("DOMContentLoaded", () => {
   // Adiciona o evento de clique para cada botão de idioma
   languageLinks.forEach((link) => {
     link.addEventListener("click", (event) => {
-      event.preventDefault(); // Impede a navegação padrão do link (#)
-      const selectedLang = link.dataset.lang; // Pega o idioma do atributo data-lang
-      setLanguage(selectedLang); // Chama a função para aplicar o idioma
+      event.preventDefault();
+      const selectedLang = link.dataset.lang;
+      // Salva o idioma selecionado no localStorage para persistência
+      localStorage.setItem("dronyimagem_lang", selectedLang);
+      setLanguage(selectedLang);
     });
   });
 
-  // Carrega PT-BR como padrão
-  setLanguage("pt-br");
+  // Carrega o idioma armazenado no localStorage ou usa 'pt-br' como padrão
+  const storedLang = localStorage.getItem("dronyimagem_lang") || "pt-br";
+  setLanguage(storedLang);
 
   // 6. BOTÃO VOLTAR AO TOPO
   const backToTopButton = document.querySelector(".back-to-top-btn");
-  const showButtonThreshold = 300; // Distância de rolagem para mostrar o botão
+  const showButtonThreshold = 300;
 
   if (backToTopButton) {
-    // Função para mostrar/esconder o botão
     const checkScrollForTopButton = () => {
       backToTopButton.classList.toggle(
         "visible",
         window.scrollY > showButtonThreshold
       );
     };
-    // Verifica ao rolar e ao carregar a página
     window.addEventListener("scroll", checkScrollForTopButton);
     checkScrollForTopButton();
 
-    // Adiciona a funcionalidade de clique para rolar suavemente ao topo
     backToTopButton.addEventListener("click", (event) => {
-      event.preventDefault(); // Impede o link de pular para '#'
-      window.scrollTo({ top: 0, behavior: "smooth" }); // Rola para o topo com animação suave
+      event.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
     });
   }
 
   // 7. VÍDEOS COM PLAY NO HOVER
-  const videoItems = document.querySelectorAll(".solucao-item"); // Seleciona todos os cards de solução
+  const videoItems = document.querySelectorAll(".solucao-item");
 
   videoItems.forEach((item) => {
-    const video = item.querySelector(".solucao-video"); // Encontra o elemento de vídeo dentro do card
+    const video = item.querySelector(".solucao-video");
     if (video) {
-      // Se encontrou um vídeo
-      // Evento quando o mouse entra na área do card
       item.addEventListener("mouseenter", () => {
-        // Tenta dar play no vídeo. O .catch() evita erros no console se o navegador bloquear.
-        video.play().catch((error) => {
-          /* Opcional: console.log("Video play failed:", error); */
-        });
+        // Ignora erro se autoplay for bloqueado
+        video.play().catch((error) => {});
       });
 
-      // Evento quando o mouse sai da área do card
       item.addEventListener("mouseleave", () => {
-        video.pause(); // Pausa o vídeo
-        // Verifica se o src do vídeo tem um tempo inicial definido (ex: #t=3)
+        video.pause();
         const srcTimeFragment = video.currentSrc.split("#t=")[1];
-        // Reseta o tempo do vídeo para o início (0) ou para o tempo definido no src
+        // Reseta o tempo do vídeo (para 0 ou para o tempo marcado em #t=)
         video.currentTime = srcTimeFragment ? parseFloat(srcTimeFragment) : 0;
       });
 
-      // Garante que o vídeo comece no tempo certo se #t= estiver presente no carregamento inicial
       video.addEventListener(
         "loadedmetadata",
         () => {
@@ -249,7 +218,7 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         },
         { once: true }
-      ); // Executa apenas uma vez quando os metadados carregam
+      );
     }
   });
 
@@ -257,29 +226,24 @@ document.addEventListener("DOMContentLoaded", () => {
   const whatsappForm = document.getElementById("whatsapp-form");
   if (whatsappForm) {
     whatsappForm.addEventListener("submit", (event) => {
-      event.preventDefault(); // Impede o envio padrão do formulário
+      event.preventDefault();
 
-      // --- Definições ---
       const whatsappNumber = "5565999396490";
 
-      // --- Pegar os valores dos campos ---
       const nome = document.getElementById("nome").value;
       const cidade = document.getElementById("cidade").value;
       const finalidade = document.getElementById("finalidade").value;
       const dataServico = document.getElementById("data-servico").value;
       const precisaEdicao = document.getElementById("edicao").checked;
 
-      // --- Formatar a Data (para ficar DD/MM/AAAA) ---
       let dataFormatada = "Ainda não sei / A combinar";
       if (dataServico) {
         const [ano, mes, dia] = dataServico.split("-");
         dataFormatada = `${dia}/${mes}/${ano}`;
       }
 
-      // --- Formatar o Checkbox de Edição ---
       const edicaoTexto = precisaEdicao ? "Sim" : "Não";
 
-      // --- Formatar a Mensagem Final ---
       const textoMensagem =
         `Olá, DronyImagem! Gostaria de um orçamento.\n\n` +
         `*Nome:* ${nome}\n` +
@@ -290,19 +254,14 @@ document.addEventListener("DOMContentLoaded", () => {
         `------------------\n` +
         `*(Se possível, por favor, anexe aqui qualquer imagem ou referência do projeto que você tenha.)*`;
 
-      // --- 1. DISPARAR O EVENTO DO GOOGLE ANALYTICS (GA4) ---
-      // Nós damos um nome ao evento (ex: 'clique_whatsapp')
-      // e enviamos os dados do formulário como parâmetros.
       if (typeof gtag === "function") {
         gtag("event", "clique_whatsapp", {
           event_category: "formulario_contato",
-          event_label: finalidade, // Envia a finalidade como um rótulo
-          cidade: cidade, // Podemos até enviar a cidade
+          event_label: finalidade,
+          cidade: cidade,
         });
       }
 
-      // --- 2. ABRIR O WHATSAPP ---
-      // (Não precisamos mais esperar pelo callback)
       const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
         textoMensagem
       )}`;
