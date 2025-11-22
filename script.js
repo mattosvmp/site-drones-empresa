@@ -195,25 +195,14 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 7. VÍDEOS COM PLAY NO HOVER
+  // 7. VÍDEOS EM AUTOPLAY IMEDIATO (REMOVIDA A LÓGICA DE HOVER/MOUSE)
   const videoItems = document.querySelectorAll(".solucao-item");
 
   if (videoItems.length > 0) {
-    // Garante que só executa se estiver no index.html
     videoItems.forEach((item) => {
       const video = item.querySelector(".solucao-video");
       if (video) {
-        // Lógica de Hover para DESKTOP
-        item.addEventListener("mouseenter", () => {
-          video.play().catch((error) => {});
-        });
-
-        item.addEventListener("mouseleave", () => {
-          video.pause();
-          const srcTimeFragment = video.currentSrc.split("#t=")[1];
-          video.currentTime = srcTimeFragment ? parseFloat(srcTimeFragment) : 0;
-        });
-
+        // Configura o tempo de início do vídeo (para vídeos com #t=)
         video.addEventListener(
           "loadedmetadata",
           () => {
@@ -221,14 +210,17 @@ document.addEventListener("DOMContentLoaded", () => {
             if (srcTimeOnLoad) {
               video.currentTime = parseFloat(srcTimeOnLoad);
             }
+            // Tenta iniciar a reprodução imediatamente após carregar metadados
+            video.play().catch((error) => {
+              // Ignora erros de autoplay
+            });
           },
           { once: true }
         );
 
-        // TENTA AUTOPLAY IMEDIATO (IDEAL PARA MOBILE/COMPATÍVEL COM DESKTOP)
-        // Como o vídeo é 'muted', isso deve funcionar na maioria dos navegadores modernos.
+        // Tenta Autoplay imediato, caso o loadedmetadata não seja rápido o suficiente
         video.play().catch((error) => {
-          // Ignora erros de autoplay, caso o navegador ainda bloqueie.
+          // Ignora erros de autoplay
         });
       }
     });
