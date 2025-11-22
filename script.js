@@ -203,6 +203,7 @@ document.addEventListener("DOMContentLoaded", () => {
     videoItems.forEach((item) => {
       const video = item.querySelector(".solucao-video");
       if (video) {
+        // Lógica de Hover para DESKTOP
         item.addEventListener("mouseenter", () => {
           video.play().catch((error) => {});
         });
@@ -223,6 +224,12 @@ document.addEventListener("DOMContentLoaded", () => {
           },
           { once: true }
         );
+
+        // TENTA AUTOPLAY IMEDIATO (IDEAL PARA MOBILE/COMPATÍVEL COM DESKTOP)
+        // Como o vídeo é 'muted', isso deve funcionar na maioria dos navegadores modernos.
+        video.play().catch((error) => {
+          // Ignora erros de autoplay, caso o navegador ainda bloqueie.
+        });
       }
     });
   }
