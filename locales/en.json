@@ -94,5 +94,16 @@
   "footerDev": "Developed with passion for aerial technology.",
   "lumaskyPageLink": "lumasky.html",
   "galleryPhotosPageLink": "galeria-fotos.html",
-  "galleryVideosPageLink": "galeria-videos.html"
+  "galleryVideosPageLink": "galeria-videos.html",
+  "gallerySunsetTitle": "Sunset in Cuiabá",
+  "galleryResortTitle": "Luxury Resort in Mato Grosso",
+  "altSunset": "Sunset photo in Cuiabá",
+  "altResort": "Aerial photo of Luxury Resort",
+  "breadcrumbHome": "Home",
+  "breadcrumbVideoGallery": "Video Gallery",
+  "btnViewFolder": "View Folder",
+  "btnBackToFolders": "← Back to Folders",
+  "videoFolderCommercial": "Commercial Establishments",
+  "videoFolderRealEstate": "Real Estate",
+  "videoFolderPostcards": "Postcards"
 }

@@ -94,5 +94,16 @@
   "footerDev": "Desenvolvido com paixão pela tecnologia aérea.",
   "lumaskyPageLink": "lumasky.html",
   "galleryPhotosPageLink": "galeria-fotos.html",
-  "galleryVideosPageLink": "galeria-videos.html"
+  "galleryVideosPageLink": "galeria-videos.html",
+  "gallerySunsetTitle": "Pôr do Sol em Cuiabá",
+  "galleryResortTitle": "Resort de Luxo em Mato Grosso",
+  "altSunset": "Foto do Pôr do Sol em Cuiabá",
+  "altResort": "Foto aérea de Resort de Luxo",
+  "breadcrumbHome": "Início",
+  "breadcrumbVideoGallery": "Galeria de Vídeos",
+  "btnViewFolder": "Ver Pasta",
+  "btnBackToFolders": "← Voltar para Pastas",
+  "videoFolderCommercial": "Estabelecimentos Comerciais",
+  "videoFolderRealEstate": "Imobiliárias",
+  "videoFolderPostcards": "Cartões Postais"
 }

@@ -3,9 +3,26 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=AW-17693491481"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "AW-17693491481");
+      gtag("config", "G-XPLS30LR38");
+    </script>
+
     <title data-translate-key="videoGalleryTitle">
       Galeria de Vídeos - DronyImagem
     </title>
+
     <link rel="stylesheet" href="css/style.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap"
@@ -31,6 +48,8 @@
         max-width: 1200px;
         margin: 0 auto;
         padding: 0 20px;
+        flex-wrap: wrap;
+        gap: 15px;
       }
       .simple-logo a {
         font-size: 1.5rem;
@@ -38,15 +57,11 @@
         color: var(--text-color);
         text-decoration: none;
       }
-
-      /* NOVO ESTILO: Container para alinhar seletor e link */
       .header-right-controls {
         display: flex;
         align-items: center;
         gap: 20px;
       }
-
-      /* NOVO ESTILO: Seletor de Idioma */
       .language-selector a {
         font-size: 0.9rem;
         font-weight: 600;
@@ -54,38 +69,208 @@
         padding: 0 5px;
         transition: color 0.3s;
         white-space: nowrap;
+        text-decoration: none;
       }
-
       .language-selector a:hover,
       .language-selector a.lang-active {
         color: var(--text-color);
       }
-
       .back-link a {
         color: var(--accent-color);
         text-decoration: none;
         font-weight: 600;
       }
+
+      @media (max-width: 768px) {
+        .simple-header .container {
+          justify-content: center;
+          flex-direction: column;
+        }
+        .header-right-controls {
+          width: 100%;
+          justify-content: space-between;
+          font-size: 0.9rem;
+        }
+      }
+
       .page-content {
-        padding: 60px 0;
+        padding: 40px 0 60px;
+        min-height: 80vh;
       }
       .page-content .container {
-        max-width: 800px;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
       }
       .page-content h1 {
-        font-size: 2.8rem;
+        font-size: 2.5rem;
         font-weight: 800;
-        margin-bottom: 15px;
+        margin-bottom: 10px;
         text-align: center;
-        line-height: 1.2;
         color: var(--accent-color);
       }
       .page-content .subtitle {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         color: #ccc;
         text-align: center;
-        margin-bottom: 40px;
+        margin-bottom: 30px;
         font-style: italic;
+      }
+
+      .breadcrumbs {
+        font-size: 0.95rem;
+        color: #aaa;
+        margin-bottom: 30px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .breadcrumbs a {
+        color: #aaa;
+        transition: color 0.3s;
+        text-decoration: none;
+      }
+
+      .breadcrumbs a:hover {
+        color: var(--accent-color);
+      }
+
+      .breadcrumbs .separator {
+        color: #555;
+        font-size: 0.8rem;
+      }
+
+      .breadcrumbs .current {
+        color: var(--text-color);
+        font-weight: 600;
+      }
+
+      .folders-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+        animation: fadeIn 0.5s ease;
+      }
+
+      .folder-card {
+        position: relative;
+        border-radius: 12px;
+        overflow: hidden;
+        cursor: pointer;
+        transition: transform 0.3s, border-color 0.3s;
+        aspect-ratio: 16/9;
+        border: 1px solid #333;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+
+      .folder-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition: background 0.3s;
+        padding: 20px;
+      }
+
+      .folder-card:hover {
+        transform: translateY(-5px);
+        border-color: var(--accent-color);
+      }
+
+      .folder-card:hover .folder-overlay {
+        background: rgba(0, 0, 0, 0.4);
+      }
+
+      .folder-icon svg {
+        width: 50px;
+        height: 50px;
+        fill: #fff;
+        margin-bottom: 10px;
+        opacity: 0.9;
+      }
+
+      .folder-title {
+        font-size: 1.4rem;
+        font-weight: 800;
+        color: #fff;
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+      }
+
+      .folder-count {
+        font-size: 0.8rem;
+        color: #ddd;
+        margin-top: 5px;
+        opacity: 0.8;
+      }
+
+      .directory-content {
+        display: none;
+        animation: slideUp 0.4s ease;
+      }
+
+      .directory-content.active {
+        display: block;
+      }
+
+      .directory-header {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 40px;
+        border-bottom: 1px solid #333;
+        padding-bottom: 20px;
+      }
+
+      .btn-back-folder {
+        background: none;
+        border: 2px solid #333;
+        color: #ccc;
+        padding: 8px 15px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-weight: 600;
+        font-family: inherit;
+        transition: 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .btn-back-folder:hover {
+        border-color: var(--accent-color);
+        color: #fff;
+      }
+
+      .directory-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #fff;
+        margin: 0;
+      }
+
+      .enterprise-group {
+        margin-bottom: 60px;
+      }
+
+      .enterprise-title {
+        font-size: 1.4rem;
+        color: var(--accent-color);
+        margin-bottom: 20px;
+        border-left: 4px solid var(--accent-color);
+        padding-left: 15px;
       }
 
       .video-wrapper {
@@ -93,11 +278,11 @@
         padding-top: 56.25%;
         height: 0;
         overflow: hidden;
-        border-radius: 12px;
-        max-width: 100%;
-        margin: 0 auto;
+        border-radius: 8px;
+        background-color: #000;
         border: 1px solid #333;
-        background-color: #111;
+        margin-bottom: 30px;
+        max-width: 800px;
       }
       .video-wrapper iframe {
         position: absolute;
@@ -108,18 +293,23 @@
         border: 0;
       }
 
-      .video-topic-title {
-        font-size: 1.8rem;
-        font-weight: 700;
-        color: #fff;
-        margin-top: 60px;
-        margin-bottom: 20px;
-        text-align: left;
-        border-bottom: 1px solid var(--accent-color);
-        padding-bottom: 10px;
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
       }
-      .video-topic-title:first-of-type {
-        margin-top: 40px;
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
     </style>
   </head>
@@ -139,7 +329,7 @@
           </div>
           <div class="back-link">
             <a href="index.html#portifolio" data-translate-key="backToPortfolio"
-              >← Voltar ao Portfólio</a
+              >← Voltar</a
             >
           </div>
         </div>
@@ -148,61 +338,206 @@
 
     <main class="page-content">
       <div class="container">
+        <div class="breadcrumbs">
+          <a href="index.html" data-translate-key="breadcrumbHome">Início</a>
+          <span class="separator">/</span>
+          <a
+            href="#"
+            onclick="closeFolder(); return false;"
+            data-translate-key="breadcrumbVideoGallery"
+            >Galeria de Vídeos</a
+          >
+          <span
+            class="separator"
+            id="breadcrumb-separator"
+            style="display: none"
+            >/</span
+          >
+          <span
+            class="current"
+            id="breadcrumb-current"
+            style="display: none"
+          ></span>
+        </div>
+
         <h1 data-translate-key="videoGalleryTitle">Galeria de Vídeos</h1>
         <p class="subtitle" data-translate-key="videoGallerySubtitle">
           Nossas melhores produções aéreas em movimento.
         </p>
 
-        <h2 class="video-topic-title" data-translate-key="videoTopicCommercial">
-          Estabelecimentos Comerciais
-        </h2>
-        <div class="video-wrapper">
-          <iframe
-            width="560"
-            height="315"
-            src="https://www.youtube.com/embed/a5HMyLuj_Cc"
-            title="YouTube video player"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen
-          ></iframe>
+        <div id="folders-root" class="folders-grid">
+          <div
+            class="folder-card"
+            onclick="openFolder('folder-commercial', 'Estabelecimentos Comerciais')"
+            style="
+              background-image: url('https://img.youtube.com/vi/a5HMyLuj_Cc/maxresdefault.jpg');
+            "
+          >
+            <div class="folder-overlay">
+              <div class="folder-icon">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"
+                  />
+                </svg>
+              </div>
+              <div
+                class="folder-title"
+                data-translate-key="videoTopicCommercial"
+              >
+                Estabelecimentos Comerciais
+              </div>
+              <div class="folder-count" data-translate-key="btnViewFolder">
+                Ver Pasta
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="folder-card"
+            onclick="openFolder('folder-realestate', 'Imobiliárias')"
+            style="
+              background-image: url('https://img.youtube.com/vi/-T541ZVwkWk/maxresdefault.jpg');
+            "
+          >
+            <div class="folder-overlay">
+              <div class="folder-icon">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"
+                  />
+                </svg>
+              </div>
+              <div
+                class="folder-title"
+                data-translate-key="videoTopicRealEstate"
+              >
+                Imobiliárias
+              </div>
+              <div class="folder-count" data-translate-key="btnViewFolder">
+                Ver Pasta
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="folder-card"
+            onclick="openFolder('folder-postcards', 'Cartões Postais')"
+            style="
+              background-image: url('https://img.youtube.com/vi/O_VP6VHp9KU/maxresdefault.jpg');
+            "
+          >
+            <div class="folder-overlay">
+              <div class="folder-icon">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"
+                  />
+                </svg>
+              </div>
+              <div
+                class="folder-title"
+                data-translate-key="videoTopicPostalCards"
+              >
+                Cartões Postais
+              </div>
+              <div class="folder-count" data-translate-key="btnViewFolder">
+                Ver Pasta
+              </div>
+            </div>
+          </div>
         </div>
 
-        <h2 class="video-topic-title" data-translate-key="videoTopicRealEstate">
-          Imobiliárias
-        </h2>
-        <div class="video-wrapper">
-          <iframe
-            width="560"
-            height="315"
-            src="https://www.youtube.com/embed/-T541ZVwkWk"
-            title="YouTube video player"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen
-          ></iframe>
+        <div id="folder-commercial" class="directory-content">
+          <div class="directory-header">
+            <button
+              class="btn-back-folder"
+              onclick="closeFolder()"
+              data-translate-key="btnBackToFolders"
+            >
+              ← Voltar
+            </button>
+            <h2
+              class="directory-title"
+              data-translate-key="videoTopicCommercial"
+            >
+              Estabelecimentos Comerciais
+            </h2>
+          </div>
+
+          <div class="enterprise-group">
+            <h3 class="enterprise-title">Exemplo Empresa A</h3>
+            <div class="video-wrapper">
+              <iframe
+                src="https://www.youtube.com/embed/a5HMyLuj_Cc"
+                title="YouTube video player"
+                allowfullscreen
+              ></iframe>
+            </div>
+          </div>
         </div>
 
-        <h2
-          class="video-topic-title"
-          data-translate-key="videoTopicPostalCards"
-        >
-          Cartões Postais
-        </h2>
-        <div class="video-wrapper">
-          <iframe
-            width="560"
-            height="315"
-            src="https://www.youtube.com/embed/O_VP6VHp9KU"
-            title="YouTube video player"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen
-          ></iframe>
+        <div id="folder-realestate" class="directory-content">
+          <div class="directory-header">
+            <button
+              class="btn-back-folder"
+              onclick="closeFolder()"
+              data-translate-key="btnBackToFolders"
+            >
+              ← Voltar
+            </button>
+            <h2
+              class="directory-title"
+              data-translate-key="videoTopicRealEstate"
+            >
+              Imobiliárias
+            </h2>
+          </div>
+
+          <div class="enterprise-group">
+            <h3 class="enterprise-title">Imobiliária Exemplo</h3>
+            <div class="video-wrapper">
+              <iframe
+                src="https://www.youtube.com/embed/-T541ZVwkWk"
+                title="YouTube video player"
+                allowfullscreen
+              ></iframe>
+            </div>
+          </div>
+        </div>
+
+        <div id="folder-postcards" class="directory-content">
+          <div class="directory-header">
+            <button
+              class="btn-back-folder"
+              onclick="closeFolder()"
+              data-translate-key="btnBackToFolders"
+            >
+              ← Voltar
+            </button>
+            <h2
+              class="directory-title"
+              data-translate-key="videoTopicPostalCards"
+            >
+              Cartões Postais
+            </h2>
+          </div>
+
+          <div class="enterprise-group">
+            <h3 class="enterprise-title">Cuiabá e Região</h3>
+            <div class="video-wrapper">
+              <iframe
+                src="https://www.youtube.com/embed/O_VP6VHp9KU"
+                title="YouTube video player"
+                allowfullscreen
+              ></iframe>
+            </div>
+          </div>
         </div>
       </div>
     </main>
 
     <script src="script.js"></script>
+    <script src="js/gallery-folders.js"></script>
   </body>
 </html>

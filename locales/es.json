@@ -94,5 +94,16 @@
   "footerDev": "Desarrollado com pasión por la tecnología aérea.",
   "lumaskyPageLink": "lumasky.html",
   "galleryPhotosPageLink": "galeria-fotos.html",
-  "galleryVideosPageLink": "galeria-videos.html"
+  "galleryVideosPageLink": "galeria-videos.html",
+  "gallerySunsetTitle": "Puesta de Sol en Cuiabá",
+  "galleryResortTitle": "Resort de Lujo en Mato Grosso",
+  "altSunset": "Foto de la puesta de sol en Cuiabá",
+  "altResort": "Foto aérea de Resort de Lujo",
+  "breadcrumbHome": "Inicio",
+  "breadcrumbVideoGallery": "Galería de Videos",
+  "btnViewFolder": "Ver Carpeta",
+  "btnBackToFolders": "← Volver a Carpetas",
+  "videoFolderCommercial": "Establecimientos Comerciales",
+  "videoFolderRealEstate": "Inmobiliarias",
+  "videoFolderPostcards": "Tarjetas Postales"
 }
