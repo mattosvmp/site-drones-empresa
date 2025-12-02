@@ -12,13 +12,13 @@ let translationsCache = {};
 
 // Função auxiliar para buscar as traduções (mesma lógica do script principal)
 async function getTranslation(key) {
+  // Pega o idioma atual (ex: 'pt-br', 'en')
   const lang = document.documentElement.lang.toLowerCase() || "pt-br";
 
   // Se não tivermos o arquivo desse idioma no cache, buscamos
   if (!translationsCache[lang]) {
     try {
-      // Ajuste o caminho se necessário (ex: ../locales/ se estiver em subpasta)
-      // Como o js roda na raiz, 'locales/' deve funcionar.
+      // Busca o arquivo JSON de tradução
       const resp = await fetch(`locales/${lang}.json`);
       if (resp.ok) {
         translationsCache[lang] = await resp.json();
@@ -28,7 +28,7 @@ async function getTranslation(key) {
     }
   }
 
-  // Retorna a tradução ou a própria chave se falhar
+  // Retorna a tradução (se existir) ou a própria chave (se falhar)
   if (translationsCache[lang] && translationsCache[lang][key]) {
     return translationsCache[lang][key];
   }
@@ -63,7 +63,9 @@ function openFolder(folderId, translationKey) {
     // 4. Mostra e atualiza o breadcrumb traduzido
     breadSeparator.style.display = "inline";
     breadCurrent.style.display = "inline";
-    updateBreadcrumbText(); // <--- A Mágica acontece aqui
+
+    // Chama a tradução!
+    updateBreadcrumbText();
 
     const topContent = document.querySelector(".page-content");
     if (topContent) topContent.scrollIntoView({ behavior: "smooth" });
