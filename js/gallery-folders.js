@@ -6,11 +6,53 @@ const mainTitle = document.querySelector(
 );
 const mainSubtitle = document.querySelector(".subtitle");
 
-function openFolder(folderId, folderName) {
-  foldersRoot.style.display = "none";
-  mainTitle.style.display = "none";
-  mainSubtitle.style.display = "none";
+// Variável para guardar qual chave de tradução estamos usando no momento
+let currentKey = null;
+let translationsCache = {};
 
+// Função auxiliar para buscar as traduções (mesma lógica do script principal)
+async function getTranslation(key) {
+  const lang = document.documentElement.lang.toLowerCase() || "pt-br";
+
+  // Se não tivermos o arquivo desse idioma no cache, buscamos
+  if (!translationsCache[lang]) {
+    try {
+      // Ajuste o caminho se necessário (ex: ../locales/ se estiver em subpasta)
+      // Como o js roda na raiz, 'locales/' deve funcionar.
+      const resp = await fetch(`locales/${lang}.json`);
+      if (resp.ok) {
+        translationsCache[lang] = await resp.json();
+      }
+    } catch (e) {
+      console.error("Erro ao carregar tradução para breadcrumb", e);
+    }
+  }
+
+  // Retorna a tradução ou a própria chave se falhar
+  if (translationsCache[lang] && translationsCache[lang][key]) {
+    return translationsCache[lang][key];
+  }
+  return key;
+}
+
+// Função para atualizar o texto do breadcrumb (chamada ao abrir e ao trocar idioma)
+async function updateBreadcrumbText() {
+  if (!currentKey) return;
+  const text = await getTranslation(currentKey);
+  if (breadCurrent) breadCurrent.textContent = text;
+}
+
+// === FUNÇÃO PRINCIPAL CHAMADA PELO HTML ===
+function openFolder(folderId, translationKey) {
+  // 1. Guarda a chave para usar se o idioma mudar
+  currentKey = translationKey;
+
+  // 2. Esconde a grade principal
+  foldersRoot.style.display = "none";
+  if (mainTitle) mainTitle.style.display = "none";
+  if (mainSubtitle) mainSubtitle.style.display = "none";
+
+  // 3. Fecha todas e abre a selecionada
   const allFolders = document.querySelectorAll(".directory-content");
   allFolders.forEach((folder) => folder.classList.remove("active"));
 
@@ -18,9 +60,10 @@ function openFolder(folderId, folderName) {
   if (selectedFolder) {
     selectedFolder.classList.add("active");
 
+    // 4. Mostra e atualiza o breadcrumb traduzido
     breadSeparator.style.display = "inline";
     breadCurrent.style.display = "inline";
-    breadCurrent.textContent = folderName;
+    updateBreadcrumbText(); // <--- A Mágica acontece aqui
 
     const topContent = document.querySelector(".page-content");
     if (topContent) topContent.scrollIntoView({ behavior: "smooth" });
@@ -28,6 +71,8 @@ function openFolder(folderId, folderName) {
 }
 
 function closeFolder() {
+  currentKey = null; // Limpa a chave atual
+
   const allFolders = document.querySelectorAll(".directory-content");
   allFolders.forEach((folder) => folder.classList.remove("active"));
 
@@ -36,6 +81,21 @@ function closeFolder() {
   breadCurrent.textContent = "";
 
   foldersRoot.style.display = "grid";
-  mainTitle.style.display = "block";
-  mainSubtitle.style.display = "block";
+  if (mainTitle) mainTitle.style.display = "block";
+  if (mainSubtitle) mainSubtitle.style.display = "block";
 }
+
+// === OBSERVADOR DE MUDANÇA DE IDIOMA ===
+// Se o usuário trocar a bandeira lá em cima, o breadcrumb atualiza sozinho
+const breadcrumbObserver = new MutationObserver((mutations) => {
+  mutations.forEach((mutation) => {
+    if (mutation.attributeName === "lang") {
+      updateBreadcrumbText();
+    }
+  });
+});
+
+breadcrumbObserver.observe(document.documentElement, {
+  attributes: true,
+  attributeFilter: ["lang"],
+});
