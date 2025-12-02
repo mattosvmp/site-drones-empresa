@@ -1,102 +1,147 @@
 document.addEventListener("DOMContentLoaded", () => {
-  carregarFotos();
-  carregarVideos();
-});
+  // Variáveis para guardar os dados brutos (cache)
+  let dadosFotos = [];
+  let dadosVideos = [];
 
-// --- FUNÇÃO DE FOTOS ---
-function carregarFotos() {
-  const urlFotos = "data/fotos.json";
+  // 1. Carrega os dados iniciais
+  carregarDados();
 
-  fetch(urlFotos)
-    .then((response) => {
-      if (!response.ok) return null;
-      return response.json();
-    })
-    .then((data) => {
-      if (data && data.lista_fotos) {
-        renderizarFotos(data.lista_fotos);
+  // 2. "Vigia" se o idioma mudou no HTML (Observer)
+  // O seu script.js altera o atributo lang="pt-br" no <html lang="...">
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.type === "attributes" && mutation.attributeName === "lang") {
+        // Se o idioma mudou, renderiza tudo de novo com o novo idioma
+        console.log("Idioma mudou! Atualizando galeria...");
+        renderizarTudo();
       }
-    })
-    .catch((error) =>
-      console.log("Info: Nenhuma foto dinâmica ou erro ao ler JSON.")
-    );
-}
+    });
+  });
 
-function renderizarFotos(fotos) {
-  fotos.forEach((foto) => {
-    const container = document.getElementById(foto.categoria);
-    if (container) {
-      const itemDiv = document.createElement("div");
-      itemDiv.classList.add("gallery-item");
+  observer.observe(document.documentElement, {
+    attributes: true, // Observa atributos
+    attributeFilter: ["lang"], // Apenas o atributo 'lang'
+  });
 
-      const img = document.createElement("img");
-      img.src = foto.imagem_url;
-      img.alt = foto.titulo;
-      img.loading = "lazy";
+  // --- FUNÇÕES DE CARREGAMENTO ---
 
-      img.addEventListener("click", () => {
-        if (typeof window.abrirModalExterno === "function") {
-          window.abrirModalExterno(img);
+  function carregarDados() {
+    // Busca Fotos
+    fetch("data/fotos.json")
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (data && data.lista_fotos) {
+          dadosFotos = data.lista_fotos;
+          renderizarFotos(); // Primeira renderização
         }
       });
 
-      itemDiv.appendChild(img);
-      container.appendChild(itemDiv);
-    }
-  });
+    // Busca Vídeos
+    fetch("data/videos.json")
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (data && data.lista_videos) {
+          dadosVideos = data.lista_videos;
+          renderizarVideos(); // Primeira renderização
+        }
+      });
+  }
 
-  // Atualiza o contador/setas do modal se ele já estiver carregado
-  /* Pequeno delay para garantir que o DOM atualizou */
-  setTimeout(() => {
-    // Se houver alguma lógica de reinicialização do modal, pode ir aqui
-  }, 500);
-}
+  function renderizarTudo() {
+    renderizarFotos();
+    renderizarVideos();
+  }
 
-// --- FUNÇÃO DE VÍDEOS (NOVA) ---
-function carregarVideos() {
-  const urlVideos = "data/videos.json";
+  // --- FUNÇÃO AUXILIAR DE TRADUÇÃO ---
+  function getTituloTraduzido(item) {
+    const lang = document.documentElement.lang.toLowerCase(); // ex: 'pt-br', 'en', 'es'
 
-  fetch(urlVideos)
-    .then((response) => {
-      if (!response.ok) return null;
-      return response.json();
-    })
-    .then((data) => {
-      if (data && data.lista_videos) {
-        renderizarVideos(data.lista_videos);
+    // Tenta pegar a tradução específica, se não existir, usa o padrão (PT)
+    if (lang.includes("en") && item.titulo_en) return item.titulo_en;
+    if (lang.includes("es") && item.titulo_es) return item.titulo_es;
+
+    return item.titulo; // Fallback para Português
+  }
+
+  // --- RENDERIZADORES ---
+
+  function renderizarFotos() {
+    // Primeiro, limpa os containers para não duplicar
+    const containers = document.querySelectorAll(".gallery-grid");
+    containers.forEach((div) => (div.innerHTML = ""));
+
+    dadosFotos.forEach((foto) => {
+      const container = document.getElementById(foto.categoria);
+      if (container) {
+        const itemDiv = document.createElement("div");
+        itemDiv.classList.add("gallery-item");
+
+        const img = document.createElement("img");
+        img.src = foto.imagem_url;
+
+        // AQUI ESTÁ O SEGREDO: Usa o título traduzido
+        const tituloTexto = getTituloTraduzido(foto);
+        img.alt = tituloTexto;
+        img.title = tituloTexto; // Tooltip ao passar o mouse
+        img.loading = "lazy";
+
+        img.addEventListener("click", () => {
+          if (typeof window.abrirModalExterno === "function") {
+            window.abrirModalExterno(img);
+          }
+        });
+
+        itemDiv.appendChild(img);
+        container.appendChild(itemDiv);
       }
-    })
-    .catch((error) =>
-      console.log("Info: Nenhum vídeo dinâmico ou erro ao ler JSON.")
-    );
-}
+    });
+  }
 
-function renderizarVideos(videos) {
-  videos.forEach((video) => {
-    // O 'id' do container é a categoria salva no CMS (ex: folder-commercial)
-    const container = document.getElementById(video.categoria);
+  function renderizarVideos() {
+    // Limpa apenas os itens dinâmicos (mantendo o cabeçalho se houver, mas seu HTML já separa os containers)
+    // No seu caso, os containers são #folder-commercial, etc. Precisamos limpar apenas os .enterprise-group gerados
+    // Estratégia: Limpar o conteúdo DEPOIS do cabeçalho seria complexo.
+    // Melhor estratégia: Limpar tudo e deixar o cabeçalho fixo no HTML (que já está fora da div de conteúdo no design anterior? Vamos verificar).
 
-    if (container) {
-      // Cria a estrutura HTML do vídeo
-      const groupDiv = document.createElement("div");
-      groupDiv.classList.add("enterprise-group");
+    // Ajuste: No seu HTML, o container #folder-commercial contém o cabeçalho E os vídeos.
+    // Para não apagar o botão "Voltar", vamos procurar apenas os vídeos antigos e remover.
 
-      // Monta o HTML interno (Título + Iframe)
-      // Nota: Usamos o ID do YouTube para montar o link embed
-      groupDiv.innerHTML = `
-        <h3 class="enterprise-title">${video.titulo}</h3>
-        <div class="video-wrapper">
-          <iframe
-            src="https://www.youtube.com/embed/${video.youtube_id}"
-            title="${video.titulo}"
-            allowfullscreen
-            loading="lazy"
-          ></iframe>
-        </div>
-      `;
+    const containersIds = [
+      "folder-commercial",
+      "folder-realestate",
+      "folder-postcards",
+    ];
 
-      // Adiciona ao final da pasta correspondente
-      container.appendChild(groupDiv);
-    }
-  });
-}
+    containersIds.forEach((id) => {
+      const container = document.getElementById(id);
+      if (!container) return;
+
+      // Remove apenas os elementos de vídeo adicionados dinamicamente
+      const videosAntigos = container.querySelectorAll(".enterprise-group");
+      videosAntigos.forEach((el) => el.remove());
+    });
+
+    dadosVideos.forEach((video) => {
+      const container = document.getElementById(video.categoria);
+      if (container) {
+        const groupDiv = document.createElement("div");
+        groupDiv.classList.add("enterprise-group");
+
+        const tituloTexto = getTituloTraduzido(video);
+
+        groupDiv.innerHTML = `
+          <h3 class="enterprise-title">${tituloTexto}</h3>
+          <div class="video-wrapper">
+            <iframe
+              src="https://www.youtube.com/embed/${video.youtube_id}"
+              title="${tituloTexto}"
+              allowfullscreen
+              loading="lazy"
+            ></iframe>
+          </div>
+        `;
+        container.appendChild(groupDiv);
+      }
+    });
+  }
+});

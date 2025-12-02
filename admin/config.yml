@@ -1,8 +1,9 @@
 backend:
   name: git-gateway
-  branch: main # Ou 'master', verifique o nome da sua branch no GitHub
+  branch: main # Confirme se sua branch principal no GitHub é 'main' ou 'master'
 
-media_folder: "site-drones/img/uploads" # Pasta fake, pois usaremos links externos
+# Configuração de mídia (apenas para cumprir requisito do CMS, pois usamos links externos)
+media_folder: "img/uploads"
 public_folder: "img/uploads"
 
 collections:
@@ -11,40 +12,73 @@ collections:
     files:
       - name: "fotos"
         label: "Galeria de Fotos"
-        file: "data/fotos.json"
+        file: "data/fotos.json" # Caminho corrigido conforme solicitado
         fields:
           - name: "lista_fotos"
             label: "Fotos"
             widget: "list"
             fields:
-              - { label: "Título/Alt", name: "titulo", widget: "string" }
+              - {
+                  label: "Título (PT - Padrão)",
+                  name: "titulo",
+                  widget: "string",
+                }
+              - {
+                  label: "Título (EN - Inglês)",
+                  name: "titulo_en",
+                  widget: "string",
+                  required: false,
+                }
+              - {
+                  label: "Título (ES - Espanhol)",
+                  name: "titulo_es",
+                  widget: "string",
+                  required: false,
+                }
               - {
                   label: "Link da Imagem (Imgur)",
                   name: "imagem_url",
                   widget: "string",
-                  hint: "Cole o link direto da imagem (ex: .jpg)",
+                  hint: "Cole o link direto da imagem (ex: https://i.imgur.com/xxx.jpg)",
                 }
               - {
                   label: "Categoria",
                   name: "categoria",
                   widget: "select",
                   options: ["grid-pordosol", "grid-resort"],
+                  hint: "Escolha em qual seção a foto vai aparecer",
                 }
 
       - name: "videos"
         label: "Galeria de Vídeos"
-        file: "data/videos.json"
+        file: "data/videos.json" # Caminho corrigido conforme solicitado
         fields:
           - name: "lista_videos"
             label: "Vídeos"
             widget: "list"
             fields:
-              - { label: "Título do Cliente", name: "titulo", widget: "string" }
+              - {
+                  label: "Título (PT - Padrão)",
+                  name: "titulo",
+                  widget: "string",
+                }
+              - {
+                  label: "Título (EN - Inglês)",
+                  name: "titulo_en",
+                  widget: "string",
+                  required: false,
+                }
+              - {
+                  label: "Título (ES - Espanhol)",
+                  name: "titulo_es",
+                  widget: "string",
+                  required: false,
+                }
               - {
                   label: "ID do YouTube",
                   name: "youtube_id",
                   widget: "string",
-                  hint: "Apenas o código final (ex: a5HMyLuj_Cc)",
+                  hint: "Apenas o código final após o v= (ex: a5HMyLuj_Cc)",
                 }
               - {
                   label: "Categoria (Pasta)",
