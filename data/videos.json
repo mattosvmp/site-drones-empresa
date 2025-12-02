@@ -2,8 +2,31 @@
   "lista_videos": [
     {
       "titulo": "Spin Dargo",
+      "titulo_en": "Spin Dargo",
+      "titulo_es": "Spin Dargo",
       "youtube_id": "a5HMyLuj_Cc",
       "categoria": "folder-commercial"
+    },
+    {
+      "titulo": "Condomínio Ginco Florais Pérola",
+      "titulo_en": "Ginco Florais Pérola Condominium",
+      "titulo_es": "Condominio Ginco Florais Pérola",
+      "youtube_id": "NYHKNbbV7pI",
+      "categoria": "folder-commercial"
+    },
+    {
+      "titulo": "Belvedere II",
+      "titulo_en": "Belvedere II",
+      "titulo_es": "Belvedere II",
+      "youtube_id": "-T541ZVwkWk",
+      "categoria": "folder-realestate"
+    },
+    {
+      "titulo": "Ponte Sérgio Motta - Cuiabá, Mato Grosso",
+      "titulo_en": "Sérgio Motta Bridge - Cuiabá, Mato Grosso",
+      "titulo_es": "Puente Sérgio Motta - Cuiabá, Mato Grosso",
+      "youtube_id": "O_VP6VHp9KU",
+      "categoria": "folder-postcards"
     }
   ]
 }
