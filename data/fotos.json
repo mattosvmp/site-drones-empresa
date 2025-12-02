@@ -1,0 +1,9 @@
+{
+  "lista_fotos": [
+    {
+      "titulo": "Teste Manual",
+      "imagem_url": "https://i.imgur.com/yuXYEkH.jpg",
+      "categoria": "grid-pordosol"
+    }
+  ]
+}

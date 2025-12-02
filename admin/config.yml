@@ -1,0 +1,59 @@
+backend:
+  name: git-gateway
+  branch: main # Ou 'master', verifique o nome da sua branch no GitHub
+
+media_folder: "site-drones/img/uploads" # Pasta fake, pois usaremos links externos
+public_folder: "img/uploads"
+
+collections:
+  - name: "conteudo"
+    label: "Gerenciar Galerias"
+    files:
+      - name: "fotos"
+        label: "Galeria de Fotos"
+        file: "data/fotos.json"
+        fields:
+          - name: "lista_fotos"
+            label: "Fotos"
+            widget: "list"
+            fields:
+              - { label: "Título/Alt", name: "titulo", widget: "string" }
+              - {
+                  label: "Link da Imagem (Imgur)",
+                  name: "imagem_url",
+                  widget: "string",
+                  hint: "Cole o link direto da imagem (ex: .jpg)",
+                }
+              - {
+                  label: "Categoria",
+                  name: "categoria",
+                  widget: "select",
+                  options: ["grid-pordosol", "grid-resort"],
+                }
+
+      - name: "videos"
+        label: "Galeria de Vídeos"
+        file: "data/videos.json"
+        fields:
+          - name: "lista_videos"
+            label: "Vídeos"
+            widget: "list"
+            fields:
+              - { label: "Título do Cliente", name: "titulo", widget: "string" }
+              - {
+                  label: "ID do YouTube",
+                  name: "youtube_id",
+                  widget: "string",
+                  hint: "Apenas o código final (ex: a5HMyLuj_Cc)",
+                }
+              - {
+                  label: "Categoria (Pasta)",
+                  name: "categoria",
+                  widget: "select",
+                  options:
+                    [
+                      "folder-commercial",
+                      "folder-realestate",
+                      "folder-postcards",
+                    ],
+                }

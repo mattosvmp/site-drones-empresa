@@ -6,19 +6,25 @@ document.addEventListener("DOMContentLoaded", () => {
   const nextBtn = document.querySelector(".next");
   const counterText = document.getElementById("imageCounter");
 
-  const galleryItems = document.querySelectorAll(".gallery-item img");
+  // Removemos a seleção inicial de galleryItems pois agora são dinâmicos
 
   let currentSectionImages = [];
   let currentIndex = 0;
   let touchStartX = 0;
   let touchEndX = 0;
 
-  const openModal = (imgElement) => {
+  // --- Função Principal de Abrir ---
+  // Tornamos ela acessível globalmente via window
+  window.abrirModalExterno = (imgElement) => {
+    // 1. Descobre em qual grid a imagem está
     const parentGrid = imgElement.closest(".gallery-grid");
     if (!parentGrid) return;
 
+    // 2. Recalcula a lista de imagens daquele grid naquele momento
     const imagesInThisSection = parentGrid.querySelectorAll("img");
     currentSectionImages = Array.from(imagesInThisSection);
+
+    // 3. Descobre a posição da imagem clicada
     currentIndex = currentSectionImages.indexOf(imgElement);
 
     updateModalImage();
@@ -30,12 +36,13 @@ document.addEventListener("DOMContentLoaded", () => {
     if (currentSectionImages.length > 0) {
       const imgElement = currentSectionImages[currentIndex];
       modalImg.src = imgElement.src;
-      modalImg.alt = imgElement.alt;
+      modalImg.alt = imgElement.alt || "Imagem da Galeria";
 
       counterText.textContent = `${currentIndex + 1} / ${
         currentSectionImages.length
       }`;
 
+      // Esconde setas se só tiver 1 imagem
       if (currentSectionImages.length <= 1) {
         prevBtn.style.visibility = "hidden";
         nextBtn.style.visibility = "hidden";
@@ -66,10 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
     updateModalImage();
   };
 
-  galleryItems.forEach((img) => {
-    img.addEventListener("click", () => openModal(img));
-  });
-
+  // --- Event Listeners dos Controles ---
   nextBtn.addEventListener("click", (e) => {
     e.stopPropagation();
     showNext();
@@ -96,6 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (e.key === "ArrowRight") showNext();
   });
 
+  // Gestos de Touch (Swipe)
   modal.addEventListener(
     "touchstart",
     (e) => {
@@ -108,13 +113,9 @@ document.addEventListener("DOMContentLoaded", () => {
     "touchend",
     (e) => {
       touchEndX = e.changedTouches[0].screenX;
-      handleSwipe();
+      if (touchStartX - touchEndX > 50) showNext();
+      if (touchEndX - touchStartX > 50) showPrev();
     },
     { passive: true }
   );
-
-  const handleSwipe = () => {
-    if (touchStartX - touchEndX > 50) showNext();
-    if (touchEndX - touchStartX > 50) showPrev();
-  };
 });
